@@ -1,5 +1,4 @@
 ﻿namespace NumericArrays.Virtual.Facades {
-    using NumericArrays.Virtual.Mathematics;
     using System;
     using System.Linq;
     using System.Runtime.CompilerServices;

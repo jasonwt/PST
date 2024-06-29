@@ -31,6 +31,17 @@
             get => base[ComputeSourceArrayLinearIndex(linearIndex)];
             set => base[ComputeSourceArrayLinearIndex(linearIndex)] = value;
         }
+
+        public override int MemoryUsage {
+            get {
+                int memoryUsage = base.MemoryUsage +
+                    (sizeof(int) * transposedAxises.Length) +
+                    (sizeof(int) * sourceArrayShape.Length) +
+                    (sizeof(int) * transposedStrides.Length);
+
+                return memoryUsage;
+            }
+        }
         #endregion
 
         #region Protected Methods

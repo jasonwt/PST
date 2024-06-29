@@ -16,6 +16,8 @@
             public int Offset { get; }
             public int Length { get; }
             public int Step { get; }
+
+            public static int MemoryUsage => sizeof(int) * 3;
         }
         #endregion
 
@@ -43,6 +45,17 @@
         public override TType this[int linearIndex] {
             get => base[ComputeSourceArrayLinearIndex(linearIndex)];
             set => base[ComputeSourceArrayLinearIndex(linearIndex)] = value;
+        }
+
+        public override int MemoryUsage {
+            get {
+                int memoryUsage = base.MemoryUsage +
+                    (sizeof(char) * slicingMaskString.Length) +
+                    (sizeof(int) * sourceArrayStrides.Length) +
+                    (SlicingMask.MemoryUsage * slicingMask.Length);
+
+                return memoryUsage;
+            }
         }
         #endregion
 

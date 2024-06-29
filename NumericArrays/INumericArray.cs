@@ -21,6 +21,8 @@
         Type ElementType { get; }
         TypeCode ElementTypeCode { get; }
 
+        int MemoryUsage { get; }
+
         int Rank { get; }
         int Length { get; }
         int[] Shape { get; }
@@ -28,6 +30,8 @@
         #endregion
 
         #region Methods
+        void Reshape(params int[] newShape);
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         int ComputeLinearIndex(int[] dimensionalIndex);
 

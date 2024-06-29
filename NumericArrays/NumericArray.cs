@@ -24,6 +24,8 @@
         private int[] strides;
         private int length;
         private bool isDisposed = false;
+        private readonly Type tType = typeof(TType);
+        private readonly TypeCode tTypeCode = Type.GetTypeCode(typeof(TType));
         #endregion
 
         #region Constructors and Finalizers
@@ -99,8 +101,22 @@
             }
         }
 
-        public Type ElementType => typeof(TType);
-        public TypeCode ElementTypeCode => Type.GetTypeCode(typeof(TType));
+        public Type ElementType => tType;
+        public TypeCode ElementTypeCode => tTypeCode;
+
+        public virtual int MemoryUsage {
+            get {
+                int memoryUsage = 
+                    (sizeof(int) * shape.Length) + 
+                    (sizeof(int) * strides.Length) + 
+                    sizeof(int) + 
+                    sizeof(bool) +
+                    //sizeof(Type) +
+                    sizeof(TypeCode);
+
+                return memoryUsage;
+            }
+        }
 
         public int Rank => shape.Length;
         public int Length => length;
@@ -155,6 +171,24 @@
         #region Public Methods
 
         #region INSArray Implementation
+        public void Reshape(params int[] newShape) {
+            if (newShape == null || newShape.Length == 0)
+            {
+                throw new ArgumentException("Shape must have at least one dimension.");
+            }
+
+            int[] newStrides = ComputeStrides(newShape);
+            int newLength = newShape[0] * newStrides[0];
+
+            if (newLength != length)
+            {
+                throw new ArgumentException("New shape must have the same number of elements as the original shape.");
+            }
+
+            shape = newShape.ToArray();
+            strides = newStrides;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual int ComputeLinearIndex(int[] dimensionalIndex) {
             Debug.Assert(dimensionalIndex != null && dimensionalIndex.Length == shape.Length, "Invalid indices.");

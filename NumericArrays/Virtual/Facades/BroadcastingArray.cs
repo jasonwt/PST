@@ -36,6 +36,17 @@
             get => base[ComputeSourceArrayLinearIndex(linearIndex)];
             set => throw new InvalidOperationException($"Can not set values on a {GetType().Name}.");
         }
+
+        public override int MemoryUsage {
+            get {
+                int memoryUsage = base.MemoryUsage +
+                    (sizeof(int) * broadcastToShape.Length) +
+                    (sizeof(int) * broadcastingShape.Length) +
+                    (sizeof(int) * broadcastingShape.Length);
+
+                return memoryUsage;
+            }
+        }
         #endregion
 
         #region Protected Methods

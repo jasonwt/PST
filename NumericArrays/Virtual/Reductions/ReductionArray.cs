@@ -20,6 +20,18 @@
         }
         #endregion
 
+        #region Public Properties
+        public override int MemoryUsage {
+            get {
+                int memoryUsage = base.MemoryUsage +
+                    sizeof(int) +
+                    sizeof(int);
+
+                return memoryUsage;
+            }
+        }
+        #endregion
+
         #region Public Static Methods
         public static int[] ComputeShape(INumericArray sourceArray, int? rank) {
             if (sourceArray == null)

@@ -69,7 +69,6 @@
             {
                 if (linearIndex > 0)
                 {
-                    // TODO: this is to slow.  going to make a copy of the Strides array each time this method is called
                     dataSourceLinearIndex += (slicingMask[i].Offset + linearIndex / ProtectedStrides[j] * slicingMask[i].Step) * sourceArrayStrides[i];
 
                     linearIndex %= ProtectedStrides[j];
@@ -77,7 +76,6 @@
                 }
                 else
                 {
-                    // TODO: this is to slow.  going to make a copy of the Strides array each time this method is called
                     dataSourceLinearIndex += slicingMask[i].Offset * sourceArrayStrides[i];
                 }
             }

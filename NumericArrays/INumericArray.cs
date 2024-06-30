@@ -18,6 +18,8 @@
         ValueType this[int linearIndex] { get; set; }
         ValueType this[params int[] indices] { get; set; }
 
+        INumericArray this[string slicingMask] { get; }
+
         Type ElementType { get; }
         TypeCode ElementTypeCode { get; }
 
@@ -55,6 +57,7 @@
         #region Properties
         new TType this[int linearIndex] { get; set; }
         new TType this[params int[] indices] { get; set; }
+        new INumericArray<TType> this[string slicingMask] { get; }
 
         new INumericArray<TType> Clone();
         #endregion

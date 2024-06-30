@@ -100,6 +100,8 @@
                 };
             }
         }
+        public INumericArray<TType> this[string slicingMask] => this.Slice(slicingMask);
+        INumericArray INumericArray.this[string slicingMask] => this[slicingMask];
 
         public Type ElementType => tType;
         public TypeCode ElementTypeCode => tTypeCode;

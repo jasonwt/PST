@@ -18,41 +18,54 @@
         public override TType this[int linearIndex] {
             get {
                 Debug.Assert(linearIndex >= 0 && linearIndex < Length);
+                int start = 0;
+                int iterations = sourceArray.Length / Length;
+                int step = axis == null ? 1 : sourceArrayStrides[axis.Value];
 
-                double[] values = new double[step];
+                if (axis != null)
+                {
+                    int sAxisStride = sourceArrayStrides[axis.Value];
+                    int sPrevAxisStride = axis.Value == 0 ? 1 : sourceArrayStrides[axis.Value - 1];
+
+                    start = (linearIndex / sAxisStride * sPrevAxisStride) + (linearIndex % sAxisStride);
+                }
+
+                int end = start + (iterations * step);
+
+                
+
+
+                double[] values = new double[iterations];
                 double sum = 0;
 
-                int start = linearIndex * step;
-                int end = start + step;
-
-                for (int i = start, j = 0; i < end; i++, j++)
+                for (int i = start, j = 0; i < end; i += step, j ++)
                 {
                     values[j] = ((IConvertible)sourceArray[i]).ToDouble(null);
                     sum += values[j];
                 }
 
-                double mean = sum / step;
+                double mean = sum / iterations;
 
                 double squared_deviations = 0;
-                for (int i = 0; i < step; i++)
+                for (int i = 0; i < iterations; i++)
                 {
                     double deviation = values[i] - mean;
                     squared_deviations += (deviation * deviation);
                 }
 
                 return ElementTypeCode switch {
-                    TypeCode.Boolean => (TType)(ValueType)((Math.Sqrt(squared_deviations / step) != 0.0)),
-                    TypeCode.SByte => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / step)).ToSByte(null),
-                    TypeCode.Byte => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / step)).ToByte(null),
-                    TypeCode.Int16 => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / step)).ToInt16(null),
-                    TypeCode.UInt16 => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / step)).ToUInt16(null),
-                    TypeCode.Int32 => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / step)).ToInt32(null),
-                    TypeCode.UInt32 => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / step)).ToUInt32(null),
-                    TypeCode.Int64 => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / step)).ToInt64(null),
-                    TypeCode.UInt64 => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / step)).ToUInt64(null),
-                    TypeCode.Single => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / step)).ToSingle(null),
-                    TypeCode.Double => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / step)).ToDouble(null),
-                    TypeCode.Decimal => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / step)).ToDecimal(null),
+                    TypeCode.Boolean => (TType)(ValueType)((Math.Sqrt(squared_deviations / iterations) != 0.0)),
+                    TypeCode.SByte => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / iterations)).ToSByte(null),
+                    TypeCode.Byte => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / iterations)).ToByte(null),
+                    TypeCode.Int16 => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / iterations)).ToInt16(null),
+                    TypeCode.UInt16 => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / iterations)).ToUInt16(null),
+                    TypeCode.Int32 => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / iterations)).ToInt32(null),
+                    TypeCode.UInt32 => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / iterations)).ToUInt32(null),
+                    TypeCode.Int64 => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / iterations)).ToInt64(null),
+                    TypeCode.UInt64 => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / iterations)).ToUInt64(null),
+                    TypeCode.Single => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / iterations)).ToSingle(null),
+                    TypeCode.Double => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / iterations)).ToDouble(null),
+                    TypeCode.Decimal => (TType)(ValueType)((IConvertible)Math.Sqrt(squared_deviations / iterations)).ToDecimal(null),
                     _ => throw new NotImplementedException()
                 };
             }

@@ -76,7 +76,7 @@
             double doubleRange = Math.Abs(doubleEnd - doubleStart);
             int numIterations = (int)(doubleRange / step);
 
-            IConcreteArray<TType> newArray = Construct<TType>(new int[] { numIterations });
+            IConcreteArray<TType> newArray = Construct<TType>(new int[] { numIterations+1 });
 
             if (doubleStart < doubleEnd)
             {
@@ -97,7 +97,7 @@
         #endregion
 
         #region Linspace Methods
-        public static IConcreteArray<TType> Linspace<TType>(string tag, TType start, TType end, int numPoints)
+        public static IConcreteArray<TType> Linspace<TType>(TType start, TType end, int numPoints)
             where TType : struct, IConvertible {
 
             if (numPoints < 2)
@@ -128,7 +128,7 @@
         #endregion
 
         #region Eye Methods
-        public static IConcreteArray<TType> Eye<TType>(string tag, int size, int rank = 2)
+        public static IConcreteArray<TType> Eye<TType>(int size, int rank = 2)
             where TType : struct, IConvertible {
 
             if (size <= 0)

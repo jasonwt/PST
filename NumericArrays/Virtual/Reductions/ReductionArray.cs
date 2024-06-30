@@ -7,7 +7,7 @@
 
         #region Protected Readonly Fields
         protected readonly int? axis;
-        protected readonly int step;
+        protected readonly int[] sourceArrayStrides;
         #endregion
 
         #region Protected Constructors
@@ -15,8 +15,7 @@
             base(sourceArray, ComputeShape(sourceArray, axis)) {
 
             this.axis = axis;
-
-            step = axis == null ? sourceArray.Length : sourceArray.Shape[axis.Value];
+            sourceArrayStrides = sourceArray.Strides;
         }
         #endregion
 
@@ -25,7 +24,7 @@
             get {
                 int memoryUsage = base.MemoryUsage +
                     sizeof(int) +
-                    sizeof(int);
+                    (sizeof(int) * sourceArrayStrides.Length);
 
                 return memoryUsage;
             }

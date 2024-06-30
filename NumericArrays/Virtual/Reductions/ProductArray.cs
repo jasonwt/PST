@@ -22,10 +22,21 @@
 
                 double product = 1;
 
-                int start = linearIndex * step;
-                int end = start + step;
+                int start = 0;
+                int iterations = sourceArray.Length / Length;
+                int step = axis == null ? 1 : sourceArrayStrides[axis.Value];
 
-                for (int i = start; i < end; i++)
+                if (axis != null)
+                {
+                    int sAxisStride = sourceArrayStrides[axis.Value];
+                    int sPrevAxisStride = axis.Value == 0 ? 1 : sourceArrayStrides[axis.Value - 1];
+
+                    start = (linearIndex / sAxisStride * sPrevAxisStride) + (linearIndex % sAxisStride);
+                }
+
+                int end = start + (iterations * step);
+
+                for (int i = start; i < end; i += step)
                 {
                     product *= ((IConvertible)sourceArray[i]).ToDouble(null);
                 }

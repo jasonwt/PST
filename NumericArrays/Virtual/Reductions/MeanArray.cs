@@ -22,27 +22,38 @@
 
                 double sum = 0;
 
-                int start = linearIndex * step;
-                int end = start + step;
+                int start = 0;
+                int iterations = sourceArray.Length / Length;
+                int step = axis == null ? 1 : sourceArrayStrides[axis.Value];
 
-                for (int i = start; i < end; i++)
+                if (axis != null)
+                {
+                    int sAxisStride = sourceArrayStrides[axis.Value];
+                    int sPrevAxisStride = axis.Value == 0 ? 1 : sourceArrayStrides[axis.Value - 1];
+
+                    start = (linearIndex / sAxisStride * sPrevAxisStride) + (linearIndex % sAxisStride);
+                }
+
+                int end = start + (iterations * step);
+
+                for (int i = start; i < end; i += step)
                 {
                     sum += ((IConvertible)sourceArray[i]).ToDouble(null);
                 }
 
                 return ElementTypeCode switch {
-                    TypeCode.Boolean => (TType)(ValueType)(((sum / step) != 0.0)),
-                    TypeCode.SByte => (TType)(ValueType)((IConvertible)(sum/step)).ToSByte(null),
-                    TypeCode.Byte => (TType)(ValueType)((IConvertible)(sum / step)).ToByte(null),
-                    TypeCode.Int16 => (TType)(ValueType)((IConvertible)(sum / step)).ToInt16(null),
-                    TypeCode.UInt16 => (TType)(ValueType)((IConvertible)(sum / step)).ToUInt16(null),
-                    TypeCode.Int32 => (TType)(ValueType)((IConvertible)(sum / step)).ToInt32(null),
-                    TypeCode.UInt32 => (TType)(ValueType)((IConvertible)(sum / step)).ToUInt32(null),
-                    TypeCode.Int64 => (TType)(ValueType)((IConvertible)(sum / step)).ToInt64(null),
-                    TypeCode.UInt64 => (TType)(ValueType)((IConvertible)(sum / step)).ToUInt64(null),
-                    TypeCode.Single => (TType)(ValueType)((IConvertible)(sum / step)).ToSingle(null),
-                    TypeCode.Double => (TType)(ValueType)((IConvertible)(sum / step)).ToDouble(null),
-                    TypeCode.Decimal => (TType)(ValueType)((IConvertible)(sum / step)).ToDecimal(null),
+                    TypeCode.Boolean => (TType)(ValueType)(((sum / iterations) != 0.0)),
+                    TypeCode.SByte => (TType)(ValueType)((IConvertible)(sum/ iterations)).ToSByte(null),
+                    TypeCode.Byte => (TType)(ValueType)((IConvertible)(sum / iterations)).ToByte(null),
+                    TypeCode.Int16 => (TType)(ValueType)((IConvertible)(sum / iterations)).ToInt16(null),
+                    TypeCode.UInt16 => (TType)(ValueType)((IConvertible)(sum / iterations)).ToUInt16(null),
+                    TypeCode.Int32 => (TType)(ValueType)((IConvertible)(sum / iterations)).ToInt32(null),
+                    TypeCode.UInt32 => (TType)(ValueType)((IConvertible)(sum / iterations)).ToUInt32(null),
+                    TypeCode.Int64 => (TType)(ValueType)((IConvertible)(sum / iterations)).ToInt64(null),
+                    TypeCode.UInt64 => (TType)(ValueType)((IConvertible)(sum / iterations)).ToUInt64(null),
+                    TypeCode.Single => (TType)(ValueType)((IConvertible)(sum / iterations)).ToSingle(null),
+                    TypeCode.Double => (TType)(ValueType)((IConvertible)(sum / iterations)).ToDouble(null),
+                    TypeCode.Decimal => (TType)(ValueType)((IConvertible)(sum / iterations)).ToDecimal(null),
                     _ => throw new NotImplementedException()
                 };
             }

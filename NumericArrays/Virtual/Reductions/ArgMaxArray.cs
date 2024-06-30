@@ -19,13 +19,24 @@
             get {
                 Debug.Assert(linearIndex >= 0 && linearIndex < Length);
 
-                int start = linearIndex * step;
-                int end = start + step;
+                int start = 0;
+                int iterations = sourceArray.Length / Length;
+                int step = axis == null ? 1 : sourceArrayStrides[axis.Value];
+
+                if (axis != null)
+                {
+                    int sAxisStride = sourceArrayStrides[axis.Value];
+                    int sPrevAxisStride = axis.Value == 0 ? 1 : sourceArrayStrides[axis.Value - 1];
+
+                    start = (linearIndex / sAxisStride * sPrevAxisStride) + (linearIndex % sAxisStride);
+                }
+
+                int end = start + (iterations * step);
 
                 double argMaxValue = ((IConvertible)sourceArray[start]).ToDouble(null);
                 int argMaxIndex = start;
 
-                for (int i = start; i < end; i++)
+                for (int i = start; i < end; i += step)
                 {
                     double value = ((IConvertible)sourceArray[i]).ToDouble(null);
 

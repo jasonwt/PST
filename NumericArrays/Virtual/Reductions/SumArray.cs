@@ -1,6 +1,7 @@
 ﻿namespace NumericArrays.Virtual.Reductions {
     using System;
     using System.Diagnostics;
+    using System.Runtime.CompilerServices;
 
     public class SumArray<TType> : ReductionArray<TType>
         where TType : struct, IConvertible {
@@ -20,18 +21,29 @@
             get {
                 Debug.Assert(linearIndex >= 0 && linearIndex < Length);
 
+                int start = 0;
+                int iterations = sourceArray.Length / Length;
+                int step = axis == null ? 1 : sourceArrayStrides[axis.Value];
+
+                if (axis != null)
+                {
+                    int sAxisStride = sourceArrayStrides[axis.Value];
+                    int sPrevAxisStride = axis.Value == 0 ? 1 : sourceArrayStrides[axis.Value - 1];
+
+                    start = (linearIndex / sAxisStride * sPrevAxisStride) + (linearIndex % sAxisStride);
+                }
+
+                int end = start + (iterations * step);
+
                 double sum = 0;
 
-                int start = linearIndex * step;
-                int end = start + step;
-
-                for (int i = start; i < end; i++)
+                for (int i = start; i < end; i += step)
                 {
                     sum += ((IConvertible)sourceArray[i]).ToDouble(null);
                 }
 
                 return ElementTypeCode switch {
-                    TypeCode.Boolean => (TType)(ValueType)((sum != 0.0)),
+                    TypeCode.Boolean => (TType)(ValueType)(sum != 0.0),
                     TypeCode.SByte => (TType)(ValueType)((IConvertible)sum).ToSByte(null),
                     TypeCode.Byte => (TType)(ValueType)((IConvertible)sum).ToByte(null),
                     TypeCode.Int16 => (TType)(ValueType)((IConvertible)sum).ToInt16(null),
@@ -50,6 +62,26 @@
         }
         #endregion
 
+        #region Protected Methods
+        // sIdx = ((idx / sStrides[axis]) * sStrides[(axis+1) % sStrides.Length]) + (idx % sStrides[axis])
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected int ComputeSourceStartingLinearIndex(int linearIndex) {
+            if (linearIndex < 0 || linearIndex >= Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(linearIndex));
+            }
+
+            if (axis == null)
+            {
+                return 0;
+            }
+
+            int sAxisStride = sourceArrayStrides[axis.Value];
+            int sPrevAxisStride = axis.Value == 0 ? 1 : sourceArrayStrides[axis.Value - 1];
+
+            return (linearIndex / sAxisStride * sPrevAxisStride) + (linearIndex % sAxisStride);
+        }
+        #endregion
         #region Public Methods
         #region ICloneable Methods
         public override INumericArray<TType> Clone() => new SumArray<TType>(sourceArray, axis);

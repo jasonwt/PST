@@ -19,21 +19,32 @@
             get {
                 Debug.Assert(linearIndex >= 0 && linearIndex < Length);
 
-                double[] values = new double[step];
+                int start = 0;
+                int iterations = sourceArray.Length / Length;
+                int step = axis == null ? 1 : sourceArrayStrides[axis.Value];
 
-                int start = linearIndex * step;
-                int end = start + step;
+                if (axis != null)
+                {
+                    int sAxisStride = sourceArrayStrides[axis.Value];
+                    int sPrevAxisStride = axis.Value == 0 ? 1 : sourceArrayStrides[axis.Value - 1];
 
-                for (int i = start, j = 0; i < end; i++, j ++)
+                    start = (linearIndex / sAxisStride * sPrevAxisStride) + (linearIndex % sAxisStride);
+                }
+
+                int end = start + (iterations * step);
+
+                double[] values = new double[iterations];
+
+                for (int i = start, j = 0; i < end; i += step, j++)
                 {
                     values[j] = ((IConvertible)sourceArray[i]).ToDouble(null);
                 }
 
                 Array.Sort(values);
 
-                int offset = step / 2;
+                int offset = iterations / 2;
 
-                double median = step % 2 == 0 ? (values[offset - 1] + values[offset]) / 2 : values[offset];
+                double median = iterations % 2 == 0 ? (values[offset - 1] + values[offset]) / 2 : values[offset];
 
                 return ElementTypeCode switch {
                     TypeCode.Boolean => (TType)(ValueType)((median != 0.0)),

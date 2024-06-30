@@ -49,15 +49,15 @@
             thisArray.ForEachElement((int i, INumericArray array) => array[i] = values[i], 0, 0, requestedThreads ?? 1);
         }
 
-        public static void Fill(this INumericArray thisArray, Func<int, ValueType> valueGenerator, int inclusiveStartingIndex = 0, int exclusiveStartingIndex = 0, int? requestedThreads = null) {
-            thisArray.ForEachElement((int i, INumericArray array) => array[i] = valueGenerator(i), inclusiveStartingIndex, exclusiveStartingIndex, requestedThreads ?? 1);
+        public static void Fill(this INumericArray thisArray, Func<int, ValueType> valueGenerator, int inclusiveStartingIndex = 0, int exclusiveEndingIndex = 0, int? requestedThreads = null) {
+            thisArray.ForEachElement((int i, INumericArray array) => array[i] = valueGenerator(i), inclusiveStartingIndex, exclusiveEndingIndex, requestedThreads ?? 1);
         }
         public static void Fill(this INumericArray thisArray, Func<int, ValueType> valueGenerator, int requestedThreads) {
             thisArray.ForEachElement((int i, INumericArray array) => array[i] = valueGenerator(i), 0, 0, requestedThreads);
         }
 
-        public static async Task FillAsync(this INumericArray thisArray, ValueType value, int inclusiveStartingIndex = 0, int exclusiveStartingIndex = 0, int? requestedThreads = null) {
-            await thisArray.ForEachElementAsync((int i, INumericArray array) => array[i] = value, inclusiveStartingIndex, exclusiveStartingIndex, requestedThreads ?? 1);
+        public static async Task FillAsync(this INumericArray thisArray, ValueType value, int inclusiveStartingIndex = 0, int exclusiveEndingIndex = 0, int? requestedThreads = null) {
+            await thisArray.ForEachElementAsync((int i, INumericArray array) => array[i] = value, inclusiveStartingIndex, exclusiveEndingIndex, requestedThreads ?? 1);
         }
         public static async Task FillAsync(this INumericArray thisArray, ValueType value, int requestedThreads) {
             await thisArray.ForEachElementAsync((int i, INumericArray array) => array[i] = value, 0, 0, requestedThreads);

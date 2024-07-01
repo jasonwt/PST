@@ -12,6 +12,7 @@
 
             var expectedValues1 = Enumerable.Range(1, 2 * 3 * 4).Zip(Enumerable.Range(1, 2 * 3 * 4).Select(a => Convert.ToSingle(a)).Reverse(), (a, b) => Convert.ToInt64(a + b)).ToArray();
             var additionArray = systemArray1.Add<long>(systemArray2);
+
             var additionArray3 = systemArray1.Add(systemArray2);
             Assert.AreEqual(TypeCode.Int64, additionArray.ElementTypeCode);
 

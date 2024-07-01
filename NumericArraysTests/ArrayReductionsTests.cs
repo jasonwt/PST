@@ -253,44 +253,28 @@
 
         [TestMethod()]
         public virtual void TestArgMin() {
-            //sbyte sbyteValue = -1;
-            //byte byteValue = 1;
-            //short shortValue = -2;
-            //ushort ushortValue = 2;
-            //int intValue = -3;
-            //uint uintValue = 3;
-            //long longValue = -4;
-            //ulong ulongValue = 4;
-            //float floatValue = 5;
-            //double doubleValue = 6;
-            //decimal decimalValue = 7;
-            
-
-            //var result = sbyteValue * ulongValue;
-
-
             var arrayToTest = CreateArray<int>(CreateArrayShape, Enumerable.Range(1, 2 * 3 * 4).Cast<ValueType>().ToArray());
 
             var intArgMin = arrayToTest.ArgMin();
-            Assert.IsTrue(intArgMin.SequenceEqual([300]));
+            Assert.IsTrue(intArgMin.SequenceEqual([0]));
 
             var intArgMin0 = arrayToTest.ArgMin(0);
             Assert.IsTrue(intArgMin0.SequenceEqual([
-                14, 16, 18, 20,
-                22, 24, 26, 28,
-                30, 32, 34, 36
+                0,0,0,0,
+                0,0,0,0,
+                0,0,0,0
             ]));
 
             var intArgMin1 = arrayToTest.ArgMin(1);
             Assert.IsTrue(intArgMin1.SequenceEqual([
-                15, 18, 21, 24,
-                51, 54, 57, 60
+                0,0,0,0,
+                0,0,0,0
             ]));
 
             var intArgMin2 = arrayToTest.ArgMin(2);
             Assert.IsTrue(intArgMin2.SequenceEqual([
-                10, 26, 42,
-                58, 74, 90
+                0,0,0,
+                0,0,0
             ]));
         }
     }

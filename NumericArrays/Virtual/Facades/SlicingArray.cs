@@ -116,6 +116,8 @@
 
                 maskParts[i] = maskParts[i].Trim();
 
+                
+
                 if (maskParts[i].Length == 0)
                 {
                     mask[i] = new SlicingMask(0, shape[i], 1);
@@ -124,6 +126,11 @@
 
                 if (int.TryParse(maskParts[i], out int idx))
                 {
+                    if (idx < 0)
+                    {
+                       idx += shape[i];
+                    }
+
                     if (idx >= shape[i])
                     {
                         throw new ArgumentException("Index out of range");
@@ -143,6 +150,8 @@
                 int offset = 0;
                 int length = shape[i];
                 int step = 1;
+
+                
 
                 for (int l = 0; l < maskPart.Length; l++)
                 {

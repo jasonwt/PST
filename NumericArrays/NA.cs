@@ -16,14 +16,10 @@
         public static INumericArray<TType> ConstructVirtualArray<TType>(IVirtualArray<TType> virtualArray, bool? toConcrete)
             where TType : struct, IConvertible {
 
-            //TODO: Not working correctly
-            //return virtualArray.ToConcrete();
-
             toConcrete ??= ShouldConstructAsConcreteArrayFunc?.Invoke(virtualArray) ?? false;
-
+            
             return toConcrete.Value ? virtualArray.ToConcrete() : virtualArray;
         }
-
         public static IConcreteArray<TType> ConstructConcreteArray<TType>(int[] shape, IConcreteArrayConstructor? concreteArrayConstructor = null)
             where TType : struct, IConvertible {
 
@@ -208,50 +204,7 @@
 
             return strides;
         }
-
-        public static int[] ComputeBroadcastingShape(int[] shape1, int[] shape2) {
-            if (shape1 == null)
-            {
-                throw new ArgumentNullException(nameof(shape1));
-            }
-
-            if (shape2 == null)
-            {
-                throw new ArgumentNullException(nameof(shape2));
-            }
-
-            if (shape1.Length == 0)
-            {
-                throw new ArgumentException("Shape can not be empty.", nameof(shape1));
-            }
-
-            if (shape2.Length == 0)
-            {
-                throw new ArgumentException("Shape can not be empty.", nameof(shape2));
-            }
-
-            var shape1List = shape1.ToList();
-            var shape2List = shape2.ToList();
-
-            // Pad the shapes to have the same length
-            int maxLength = Math.Max(shape1List.Count, shape2List.Count);
-            shape1List.InsertRange(0, Enumerable.Repeat(1, maxLength - shape1List.Count));
-            shape2List.InsertRange(0, Enumerable.Repeat(1, maxLength - shape2List.Count));
-
-            int[] broadcastingShape = new int[maxLength];
-            // Check if the shapes are compatible
-            for (int i = 0; i < shape1List.Count; i++)
-            {
-                if (shape1List[i] != shape2List[i] && shape1List[i] != 1 && shape2List[i] != 1)
-                {
-                    throw new ArgumentException("Shapes are not compatible for broadcasting.");
-                }
-
-                broadcastingShape[i] = shape1List[i] > shape2List[i] ? shape1List[i] : shape2List[i];
-            }
-
-            return broadcastingShape;
-        }
+        
         #endregion
     }
 }

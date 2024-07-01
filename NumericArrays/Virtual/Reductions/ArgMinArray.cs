@@ -34,16 +34,16 @@
                 int end = start + (iterations * step);
 
                 double argMinValue = ((IConvertible)sourceArray[start]).ToDouble(null);
-                int argMinIndex = start;
+                int argMinIndex = 0;
 
-                for (int i = start; i < end; i += step)
+                for (int i = start, j = 0; i < end; i += step, j ++)
                 {
                     double value = ((IConvertible)sourceArray[i]).ToDouble(null);
 
                     if (value < argMinValue)
                     {
                         argMinValue = value;
-                        argMinIndex = i;
+                        argMinIndex = j;
                     }
                 }
 

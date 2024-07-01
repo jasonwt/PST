@@ -1,5 +1,6 @@
 ﻿namespace NumericArrays {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public static partial class NA {
@@ -54,6 +55,25 @@
         }
         public static void Fill(this INumericArray thisArray, Func<int, ValueType> valueGenerator, int requestedThreads) {
             thisArray.ForEachElement((int i, INumericArray array) => array[i] = valueGenerator(i), 0, 0, requestedThreads);
+        }
+
+        public static void Fill(this INumericArray thisArray, INumericArray sourceArray) {
+            if (thisArray == null)
+                {
+                throw new ArgumentNullException(nameof(thisArray));
+            }
+
+            if (sourceArray == null)
+            {
+                throw new ArgumentNullException(nameof(sourceArray));
+            }
+
+            if (sourceArray.Shape.SequenceEqual(thisArray.Shape) == false)
+            {
+                throw new ArgumentException("The source array must have the same shape as the array being filled.");
+            }
+
+            thisArray.ForEachElement((int i, INumericArray array) => array[i] = sourceArray[i], 0, 0, 1);
         }
 
         public static async Task FillAsync(this INumericArray thisArray, ValueType value, int inclusiveStartingIndex = 0, int exclusiveEndingIndex = 0, int? requestedThreads = null) {

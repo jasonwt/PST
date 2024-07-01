@@ -34,16 +34,16 @@
                 int end = start + (iterations * step);
 
                 double argMaxValue = ((IConvertible)sourceArray[start]).ToDouble(null);
-                int argMaxIndex = start;
+                int argMaxIndex = 0;
 
-                for (int i = start; i < end; i += step)
+                for (int i = start, j = 0; i < end; i += step, j ++)
                 {
                     double value = ((IConvertible)sourceArray[i]).ToDouble(null);
 
                     if (value > argMaxValue)
                     {
                         argMaxValue = value;
-                        argMaxIndex = i;
+                        argMaxIndex = j;
                     }
                 }
 

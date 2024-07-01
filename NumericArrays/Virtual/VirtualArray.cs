@@ -19,8 +19,13 @@
         #endregion
 
         #region Public Methods
-        public IConcreteArray<TType> ToConcrete(IConcreteArrayConstructor? concreteArrayConstructor = null) => 
-            NA.ConstructConcreteArray<TType>(Shape, concreteArrayConstructor);
+        public IConcreteArray<TType> ToConcrete(IConcreteArrayConstructor? concreteArrayConstructor = null) {
+            IConcreteArray<TType> concreteArray = NA.ConstructConcreteArray<TType>(Shape, concreteArrayConstructor);
+
+            concreteArray.Fill(this);
+            
+            return concreteArray;
+        }
 
         IConcreteArray IVirtualArray.ToConcrete(IConcreteArrayConstructor? concreteArrayConstructor) =>
             ToConcrete(concreteArrayConstructor);

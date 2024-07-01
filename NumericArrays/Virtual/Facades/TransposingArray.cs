@@ -8,7 +8,6 @@
 
         #region Private Fields
         private readonly int[] transposedAxises;
-        private readonly int[] sourceArrayShape;
         private readonly int[] transposedStrides;
         #endregion
 
@@ -17,7 +16,6 @@
             base(sourceArray ?? throw new ArgumentNullException(nameof(sourceArray)), TransposedArray(sourceArray.Shape, transposedAxises)) {
 
             this.transposedAxises = transposedAxises.ToArray();
-            sourceArrayShape = sourceArray.Shape.ToArray();
             transposedStrides = TransposedArray(sourceArray.Strides, transposedAxises);
         }
         public TransposingArray(INumericArray<TType> sourceArray, int[] transposedAxises) :

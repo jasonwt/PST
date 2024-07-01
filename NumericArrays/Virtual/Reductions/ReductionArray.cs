@@ -7,7 +7,6 @@
 
         #region Protected Readonly Fields
         protected readonly int? axis;
-        protected readonly int[] sourceArrayStrides;
         #endregion
 
         #region Protected Constructors
@@ -15,7 +14,6 @@
             base(sourceArray, ComputeShape(sourceArray, axis)) {
 
             this.axis = axis;
-            sourceArrayStrides = sourceArray.Strides;
         }
         #endregion
 

@@ -22,7 +22,7 @@
         #region Private Fields
         private int[] shape;
         private int[] strides;
-        private int length;
+        private readonly int length;
         private bool isDisposed = false;
         private readonly Type tType = typeof(TType);
         private readonly TypeCode tTypeCode = Type.GetTypeCode(typeof(TType));
@@ -36,8 +36,8 @@
             }
 
             this.shape = shape.ToArray();
-            this.strides = ComputeStrides(shape);
-            this.length = strides[0] * shape[0];
+            strides = ComputeStrides(shape);
+            length = strides[0] * shape[0];
         }
 
         ~NumericArray() {

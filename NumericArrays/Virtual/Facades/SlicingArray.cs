@@ -6,7 +6,7 @@
         where TType : struct, IConvertible {
 
         #region Public SlicingMask Struct
-        public struct SlicingMask {
+        public readonly struct SlicingMask {
             public SlicingMask(int offset, int length, int step) {
                 Offset = offset;
                 Length = length;
@@ -23,7 +23,6 @@
 
         #region Private Fields
         private readonly string slicingMaskString;
-        private readonly int[] sourceArrayStrides;
         private readonly SlicingMask[] slicingMask;
         #endregion
 
@@ -31,8 +30,7 @@
         public SlicingArray(INumericArray sourceArray, string slicingMask) :
             base(sourceArray ?? throw new ArgumentNullException(nameof(sourceArray)), ComputeMaskShape(ComputeMask(slicingMask, sourceArray.Shape))) {
 
-            this.slicingMaskString = slicingMask;
-            sourceArrayStrides = sourceArray.Strides;
+            slicingMaskString = slicingMask;
             this.slicingMask = ComputeMask(slicingMask, sourceArray.Shape);
         }
         public SlicingArray(INumericArray<TType> sourceArray, string slicingMask) :

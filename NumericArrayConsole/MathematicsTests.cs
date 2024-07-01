@@ -5,10 +5,10 @@ using NumericArrays.Concrete;
 
 public static partial class ProfileApplication {
     public static void TestAddition() {
-        var systemArray1 = new SystemArray<int>(new int[] { 2, 3, 4 });
+        var systemArray1 = new SystemArray<int>([2,3,4]);
         systemArray1.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
-        var systemArray2 = new SystemArray<float>(new int[] { 2, 3, 4 });
+        var systemArray2 = new SystemArray<float>([2,3,4]);
         systemArray2.Fill(Enumerable.Range(1, 2 * 3 * 4).Reverse().ToArray());
 
         var expectedValues1 = Enumerable.Range(1, 2 * 3 * 4).Zip(Enumerable.Range(1, 2 * 3 * 4).Select(a => Convert.ToSingle(a)).Reverse(), (a, b) => Convert.ToInt64(a + b)).ToArray();
@@ -22,10 +22,10 @@ public static partial class ProfileApplication {
         Assert.IsTrue(additionArray2.SequenceEqual(additionArray.Select(a => ((IConvertible)a).ToInt32(null)).ToArray()));
     }
     public static void TestSubtraction() {
-        var systemArray1 = new SystemArray<int>(new int[] { 2, 3, 4 });
+        var systemArray1 = new SystemArray<int>([2,3,4]);
         systemArray1.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
-        var systemArray2 = new SystemArray<float>(new int[] { 2, 3, 4 });
+        var systemArray2 = new SystemArray<float>([2,3,4]);
         systemArray2.Fill(Enumerable.Range(1, 2 * 3 * 4).Reverse().ToArray());
 
         var expectedValues1 = Enumerable.Range(1, 2 * 3 * 4).Zip(Enumerable.Range(1, 2 * 3 * 4).Select(a => Convert.ToSingle(a)).Reverse(), (a, b) => Convert.ToInt64(a - b)).ToArray();
@@ -38,10 +38,10 @@ public static partial class ProfileApplication {
         Assert.IsTrue(subtractionArray2.SequenceEqual(subtractionArray.Select(a => ((IConvertible)a).ToInt32(null)).ToArray()));
     }
     public static void TestMultiplication() {
-        var systemArray1 = new SystemArray<int>(new int[] { 2, 3, 4 });
+        var systemArray1 = new SystemArray<int>([2,3,4]);
         systemArray1.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
-        var systemArray2 = new SystemArray<float>(new int[] { 2, 3, 4 });
+        var systemArray2 = new SystemArray<float>([2,3,4]);
         systemArray2.Fill(Enumerable.Range(1, 2 * 3 * 4).Reverse().ToArray());
 
         var expectedValues1 = Enumerable.Range(1, 2 * 3 * 4).Zip(Enumerable.Range(1, 2 * 3 * 4).Select(a => Convert.ToSingle(a)).Reverse(), (a, b) => Convert.ToInt64(a * b)).ToArray();
@@ -54,10 +54,10 @@ public static partial class ProfileApplication {
         Assert.IsTrue(multiplicationArray2.SequenceEqual(multiplicationArray.Select(a => ((IConvertible)a).ToInt32(null)).ToArray()));
     }
     public static void TestDivision() {
-        var systemArray1 = new SystemArray<int>(new int[] { 2, 3, 4 });
+        var systemArray1 = new SystemArray<int>([2,3,4]);
         systemArray1.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
-        var systemArray2 = new SystemArray<float>(new int[] { 2, 3, 4 });
+        var systemArray2 = new SystemArray<float>([2,3,4]);
         systemArray2.Fill(Enumerable.Range(1, 2 * 3 * 4).Reverse().ToArray());
 
         var expectedValues1 = Enumerable.Range(1, 2 * 3 * 4).Zip(Enumerable.Range(1, 2 * 3 * 4).Select(a => Convert.ToSingle(a)).Reverse(), (a, b) => Convert.ToInt64(a / b)).ToArray();
@@ -70,10 +70,10 @@ public static partial class ProfileApplication {
         Assert.IsTrue(divisionArray2.SequenceEqual(divisionArray.Select(a => ((IConvertible)a).ToInt32(null)).ToArray()));
     }
     public static void TestModulus() {
-        var systemArray1 = new SystemArray<int>(new int[] { 2, 3, 4 });
+        var systemArray1 = new SystemArray<int>([2,3,4]);
         systemArray1.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
-        var systemArray2 = new SystemArray<float>(new int[] { 2, 3, 4 });
+        var systemArray2 = new SystemArray<float>([2,3,4]);
         systemArray2.Fill(Enumerable.Range(1, 2 * 3 * 4).Reverse().ToArray());
 
         var expectedValues1 = Enumerable.Range(1, 2 * 3 * 4).Zip(Enumerable.Range(1, 2 * 3 * 4).Select(a => Convert.ToSingle(a)).Reverse(), (a, b) => Convert.ToInt64(a % b)).ToArray();
@@ -86,10 +86,10 @@ public static partial class ProfileApplication {
         Assert.IsTrue(modulusArray2.SequenceEqual(modulusArray.Select(a => ((IConvertible)a).ToInt32(null)).ToArray()));
     }
     public static void TestPower() {
-        var systemArray1 = new SystemArray<int>(new int[] { 2, 3, 4 });
+        var systemArray1 = new SystemArray<int>([2,3,4]);
         systemArray1.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
-        var systemArray2 = new SystemArray<float>(new int[] { 2, 3, 4 });
+        var systemArray2 = new SystemArray<float>([2,3,4]);
         systemArray2.Fill(Enumerable.Range(1, 2 * 3 * 4).Reverse().ToArray());
 
         var expectedValues1 = Enumerable.Range(1, 2 * 3 * 4).Zip(Enumerable.Range(1, 2 * 3 * 4).Select(a => Convert.ToSingle(a)).Reverse(), (a, b) => Convert.ToInt64(Math.Pow(a, b))).ToArray();
@@ -98,7 +98,7 @@ public static partial class ProfileApplication {
         Assert.IsTrue(powerArray.SequenceEqual(expectedValues1));
     }
     public static void TestNegation() {
-        var systemByteArray = new SystemArray<byte>(new int[] { 2, 3, 4 });
+        var systemByteArray = new SystemArray<byte>([2,3,4]);
         systemByteArray.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
         var expectedValues = Enumerable.Range(1, 2 * 3 * 4).Select(a => Convert.ToInt16(-a)).ToArray();
@@ -127,7 +127,7 @@ public static partial class ProfileApplication {
         Assert.IsTrue(doubleNegationArray.SequenceEqual(expectedValues.Select(a => (double) a).ToArray()));
     }
     public static void TestAbs() {
-        var systemByteArray = new SystemArray<byte>(new int[] { 2, 3, 4 });
+        var systemByteArray = new SystemArray<byte>([2,3,4]);
         systemByteArray.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
         var expectedValues = Enumerable.Range(1, 2 * 3 * 4).Select(a => Convert.ToByte(Math.Abs(a))).ToArray();

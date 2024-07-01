@@ -11,7 +11,7 @@ public static partial class ProfileApplication {
         Assert.IsTrue(systemArray.SequenceEqual(Enumerable.Range(0, 24)));
 
         var floatArray = systemArray.AsType<float>();
-        floatArray.SequenceEqual(Enumerable.Range(0, 24).Select(x => (float)x));
+        Assert.IsTrue(floatArray.SequenceEqual(Enumerable.Range(0, 24).Select(x => (float)x)));
     }
     
     public static void TransposeTests() {

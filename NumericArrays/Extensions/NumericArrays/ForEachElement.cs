@@ -63,7 +63,7 @@
                 return;
             }
 
-            Task[] tasks = new Task[numThreads];
+            var tasks = new Task[numThreads];
 
             int iterationsPerThread = totalIterations / numThreads;
 
@@ -91,50 +91,50 @@
             await Task.Run(() => ForEachElement(thisArray, action, 0, 0, requestedThreads));
         #endregion
 
-        #region Dimensional Index
-        private static void ValidateForEachElementParameters(INumericArray numericArray, int[]? inclusiveStartingDimensionalIndex, int[]? exclusiveEndingDimensionalIndex) {
-            if (numericArray == null)
-            {
-                throw new ArgumentNullException(nameof(numericArray));
-            }
+        //#region Dimensional Index
+        //private static void ValidateForEachElementParameters(INumericArray numericArray, int[]? inclusiveStartingDimensionalIndex, int[]? exclusiveEndingDimensionalIndex) {
+        //    if (numericArray == null)
+        //    {
+        //        throw new ArgumentNullException(nameof(numericArray));
+        //    }
 
-            inclusiveStartingDimensionalIndex ??= new int[numericArray.Rank];
-            exclusiveEndingDimensionalIndex ??= numericArray.Shape;
+        //    inclusiveStartingDimensionalIndex ??= new int[numericArray.Rank];
+        //    exclusiveEndingDimensionalIndex ??= numericArray.Shape;
 
-            if (inclusiveStartingDimensionalIndex.Any(i => i < 0))
-            {
-                throw new ArgumentOutOfRangeException(nameof(inclusiveStartingDimensionalIndex));
-            }
+        //    if (inclusiveStartingDimensionalIndex.Any(i => i < 0))
+        //    {
+        //        throw new ArgumentOutOfRangeException(nameof(inclusiveStartingDimensionalIndex));
+        //    }
 
-            if (exclusiveEndingDimensionalIndex.Zip(numericArray.Shape, (end, shape) => end > shape).Any(b => b == true))
-            {
-                throw new ArgumentException("exclusiveEndingDimensionalIndex must be less than or equal to the shape of the array for all dimensions");
-            }
+        //    if (exclusiveEndingDimensionalIndex.Zip(numericArray.Shape, (end, shape) => end > shape).Any(b => b == true))
+        //    {
+        //        throw new ArgumentException("exclusiveEndingDimensionalIndex must be less than or equal to the shape of the array for all dimensions");
+        //    }
 
-            if (inclusiveStartingDimensionalIndex.Zip(exclusiveEndingDimensionalIndex, (start, end) => start >= end).Any(b => b == true))
-            {
-                throw new ArgumentException("inclusiveStartingDimensionalIndex must be less than exclusiveEndingDimensionalIndex for all dimensions");
-            }
-        }
-        private static void ValidateForEachElementParameters(INumericArray numericArray, Action<int[], INumericArray> action, int[]? inclusiveStartingDimensionalIndex, int[]? exclusiveEndingDimensionalIndex) {
-            if (action == null)
-            {
-                throw new ArgumentNullException(nameof(action));
-            }
+        //    if (inclusiveStartingDimensionalIndex.Zip(exclusiveEndingDimensionalIndex, (start, end) => start >= end).Any(b => b == true))
+        //    {
+        //        throw new ArgumentException("inclusiveStartingDimensionalIndex must be less than exclusiveEndingDimensionalIndex for all dimensions");
+        //    }
+        //}
+        //private static void ValidateForEachElementParameters(INumericArray numericArray, Action<int[], INumericArray> action, int[]? inclusiveStartingDimensionalIndex, int[]? exclusiveEndingDimensionalIndex) {
+        //    if (action == null)
+        //    {
+        //        throw new ArgumentNullException(nameof(action));
+        //    }
 
-            ValidateForEachElementParameters(numericArray, inclusiveStartingDimensionalIndex, exclusiveEndingDimensionalIndex);
-        }
+        //    ValidateForEachElementParameters(numericArray, inclusiveStartingDimensionalIndex, exclusiveEndingDimensionalIndex);
+        //}
 
-        public static void ForEachElement(this INumericArray thisArray, Action<int[], INumericArray> action, int[]? inclusiveStartingDimensionalIndex = null, int[]? exclusiveEndingDimensionalIndex = null, int requestedThreads = 1) {
-            ValidateForEachElementParameters(thisArray, action, inclusiveStartingDimensionalIndex, exclusiveEndingDimensionalIndex);
+        //public static void ForEachElement(this INumericArray thisArray, Action<int[], INumericArray> action, int[]? inclusiveStartingDimensionalIndex = null, int[]? exclusiveEndingDimensionalIndex = null, int requestedThreads = 1) {
+        //    ValidateForEachElementParameters(thisArray, action, inclusiveStartingDimensionalIndex, exclusiveEndingDimensionalIndex);
 
-            inclusiveStartingDimensionalIndex ??= new int[thisArray.Rank];
-            exclusiveEndingDimensionalIndex ??= thisArray.Shape;
+        //    inclusiveStartingDimensionalIndex ??= new int[thisArray.Rank];
+        //    exclusiveEndingDimensionalIndex ??= thisArray.Shape;
 
-            throw new NotImplementedException();
-        }
-        public static async Task ForEachElementAsync(this INumericArray thisArray, Action<int[], INumericArray> action, int[]? inclusiveStartingDimensionalIndex = null, int[]? exclusiveEndingDimensionalIndex = null, int requestedThreads = 1) =>
-            await Task.Run(() => thisArray.ForEachElement(action, inclusiveStartingDimensionalIndex, exclusiveEndingDimensionalIndex, requestedThreads));
-        #endregion
+        //    throw new NotImplementedException();
+        //}
+        //public static async Task ForEachElementAsync(this INumericArray thisArray, Action<int[], INumericArray> action, int[]? inclusiveStartingDimensionalIndex = null, int[]? exclusiveEndingDimensionalIndex = null, int requestedThreads = 1) =>
+        //    await Task.Run(() => thisArray.ForEachElement(action, inclusiveStartingDimensionalIndex, exclusiveEndingDimensionalIndex, requestedThreads));
+        //#endregion
     }
 }

@@ -4,7 +4,7 @@ namespace NumericArrays.Profile;
 
 public static partial class ProfileApplication {
     public static void TestSum() {
-        var systemArray = new SystemArray<int>(new int[] { 2, 3, 4 });
+        var systemArray = new SystemArray<int>([2,3,4]);
         systemArray.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
         var sumInt = systemArray.Sum();
@@ -14,7 +14,7 @@ public static partial class ProfileApplication {
     }
 
     public static void TestProd() {
-        var systemArray = new SystemArray<int>(new int[] { 2, 3, 4 });
+        var systemArray = new SystemArray<int>([2,3,4]);
         systemArray.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
         var prodInt = systemArray.Prod();
@@ -24,7 +24,7 @@ public static partial class ProfileApplication {
     }
 
     public static void TestMean() {
-        var systemArray = new SystemArray<int>(new int[] { 2, 3, 4 });
+        var systemArray = new SystemArray<int>([2,3,4]);
         systemArray.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
         
 
@@ -35,7 +35,7 @@ public static partial class ProfileApplication {
     }
 
     public static void TestMin() {
-        var systemArray = new SystemArray<int>(new int[] { 2, 3, 4 });
+        var systemArray = new SystemArray<int>([2,3,4]);
         systemArray.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
         var minInt = systemArray.Min();
@@ -45,7 +45,7 @@ public static partial class ProfileApplication {
     }
 
     public static void TestMax() {
-        var systemArray = new SystemArray<int>(new int[] { 2, 3, 4 });
+        var systemArray = new SystemArray<int>([2,3,4]);
         systemArray.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
         var maxInt = systemArray.Max();
@@ -55,7 +55,7 @@ public static partial class ProfileApplication {
     }
 
     public static void TestMedian() {
-        var systemArray = new SystemArray<int>(new int[] { 2, 3, 4 });
+        var systemArray = new SystemArray<int>([2,3,4]);
         systemArray.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
         var medianInt = systemArray.Median();
@@ -65,7 +65,7 @@ public static partial class ProfileApplication {
     }
 
     public static void TestVar() {
-        var systemArray = new SystemArray<int>(new int[] { 2, 3, 4 });
+        var systemArray = new SystemArray<int>([2,3,4]);
         systemArray.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
         var varianceInt = systemArray.Var();
@@ -75,7 +75,7 @@ public static partial class ProfileApplication {
     }
 
     public static void TestStd() {
-        var systemArray = new SystemArray<int>(new int[] { 2, 3, 4 });
+        var systemArray = new SystemArray<int>([2,3,4]);
         systemArray.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
         var stdInt = systemArray.Std();
@@ -85,7 +85,7 @@ public static partial class ProfileApplication {
     }
 
     public static void TestArgMax() {
-        var systemArray = new SystemArray<int>(new int[] { 2, 3, 4 });
+        var systemArray = new SystemArray<int>([2,3,4]);
         systemArray.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
         var argMaxInt = systemArray.ArgMax();
@@ -95,7 +95,7 @@ public static partial class ProfileApplication {
     }
 
     public static void TestArgMin() {
-        var systemArray = new SystemArray<int>(new int[] { 2, 3, 4 });
+        var systemArray = new SystemArray<int>([2,3,4]);
         systemArray.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
         var argMinInt = systemArray.ArgMin();
@@ -120,7 +120,7 @@ public static partial class ProfileApplication {
         //all (func)
         //any (func)
 
-        //var systemArray1 = new SystemArray<int>(new int[] { 2, 3, 4 });
+        //var systemArray1 = new SystemArray<int>([2,3,4]);
         //systemArray1.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
         //foreach (var index in systemArray1.LinearIndexIterator(2)) {

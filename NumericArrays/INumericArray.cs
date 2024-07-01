@@ -7,10 +7,15 @@
     public interface INumericArray : ICloneable, IDisposable, IEnumerable {
         #region Operator Overloads
         public static INumericArray operator +(INumericArray leftArray, INumericArray rightArray) => leftArray.Add(rightArray);
+        public static INumericArray operator +(INumericArray leftArray, ValueType rightValue) => leftArray.Add(rightValue);
         public static INumericArray operator -(INumericArray leftArray, INumericArray rightArray) => leftArray.Subtract(rightArray);
+        public static INumericArray operator -(INumericArray leftArray, ValueType rightValue) => leftArray.Subtract(rightValue);
         public static INumericArray operator *(INumericArray leftArray, INumericArray rightArray) => leftArray.Multiply(rightArray);
+        public static INumericArray operator *(INumericArray leftArray, ValueType rightValue) => leftArray.Multiply(rightValue);
         public static INumericArray operator /(INumericArray leftArray, INumericArray rightArray) => leftArray.Divide(rightArray);
+        public static INumericArray operator /(INumericArray leftArray, ValueType rightValue) => leftArray.Divide(rightValue);
         public static INumericArray operator %(INumericArray leftArray, INumericArray rightArray) => leftArray.Mod(rightArray);
+        public static INumericArray operator %(INumericArray leftArray, ValueType rightValue) => leftArray.Mod(rightValue);
         public static INumericArray operator -(INumericArray array) => array.Negate();
         #endregion
 
@@ -46,12 +51,17 @@
         where TType : struct, IConvertible {
 
         #region Operator Overloads
-        public static INumericArray<TType> operator +(INumericArray<TType> leftArray, INumericArray rightArray) => leftArray.Add<TType>(rightArray);
-        public static INumericArray<TType> operator -(INumericArray<TType> leftArray, INumericArray rightArray) => leftArray.Subtract<TType>(rightArray);
-        public static INumericArray<TType> operator *(INumericArray<TType> leftArray, INumericArray rightArray) => leftArray.Multiply<TType>(rightArray);
-        public static INumericArray<TType> operator /(INumericArray<TType> leftArray, INumericArray rightArray) => leftArray.Divide<TType>(rightArray);
-        public static INumericArray<TType> operator %(INumericArray<TType> leftArray, INumericArray rightArray) => leftArray.Mod<TType>(rightArray);
-        public static INumericArray<TType> operator -(INumericArray<TType> array) => array.Negate<TType>();
+        public static INumericArray<TType> operator +(INumericArray<TType> leftArray, INumericArray rightArray) => leftArray.Add(rightArray);
+        public static INumericArray<TType> operator +(INumericArray<TType> leftArray, ValueType rightValue) => leftArray.Add(rightValue);
+        public static INumericArray<TType> operator -(INumericArray<TType> leftArray, INumericArray rightArray) => leftArray.Subtract(rightArray);
+        public static INumericArray<TType> operator -(INumericArray<TType> leftArray, ValueType rightValue) => leftArray.Subtract(rightValue);
+        public static INumericArray<TType> operator *(INumericArray<TType> leftArray, INumericArray rightArray) => leftArray.Multiply(rightArray);
+        public static INumericArray<TType> operator *(INumericArray<TType> leftArray, ValueType rightValue) => leftArray.Multiply(rightValue);
+        public static INumericArray<TType> operator /(INumericArray<TType> leftArray, INumericArray rightArray) => leftArray.Divide(rightArray);
+        public static INumericArray<TType> operator /(INumericArray<TType> leftArray, ValueType rightValue) => leftArray.Divide(rightValue);
+        public static INumericArray<TType> operator %(INumericArray<TType> leftArray, INumericArray rightArray) => leftArray.Mod(rightArray);
+        public static INumericArray<TType> operator %(INumericArray<TType> leftArray, ValueType rightValue) => leftArray.Mod(rightValue);
+        public static INumericArray<TType> operator -(INumericArray<TType> array) => array.Negate();
         #endregion
 
         #region Properties

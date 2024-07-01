@@ -19,6 +19,8 @@
             Assert.AreEqual(TypeCode.Int32, additionArray2.ElementTypeCode);
             Assert.IsTrue(additionArray.SequenceEqual(expectedValues1));
             Assert.IsTrue(additionArray2.SequenceEqual(additionArray.Select(a => ((IConvertible)a).ToInt32(null)).ToArray()));
+
+            Assert.IsTrue((systemArray1 + 5).SequenceEqual(systemArray1.Select(a => a + 5).ToArray()));
         }
 
         [TestMethod()]
@@ -37,6 +39,8 @@
             Assert.AreEqual(TypeCode.Int32, subtractionArray2.ElementTypeCode);
             Assert.IsTrue(subtractionArray.SequenceEqual(expectedValues1));
             Assert.IsTrue(subtractionArray2.SequenceEqual(subtractionArray.Select(a => ((IConvertible)a).ToInt32(null)).ToArray()));
+
+            Assert.IsTrue((systemArray1 - 1).SequenceEqual(systemArray1.Select(a => a - 1).ToArray()));
         }
 
         [TestMethod()]
@@ -54,7 +58,9 @@
             var multiplicationArray2 = systemArray1 * systemArray2;
             Assert.AreEqual(TypeCode.Int32, multiplicationArray2.ElementTypeCode);
             Assert.IsTrue(multiplicationArray.SequenceEqual(expectedValues1));
-            Assert.IsTrue(multiplicationArray2.SequenceEqual(multiplicationArray.Select(a => ((IConvertible)a).ToInt32(null)).ToArray()));
+            Assert.IsTrue(multiplicationArray2.SequenceEqual(multiplicationArray.Select(a => ((IConvertible)a).ToInt32(null))));
+
+            Assert.IsTrue((systemArray1 * 2).SequenceEqual(systemArray1.Select(a => a * 2)));
         }
 
         [TestMethod()]
@@ -72,7 +78,9 @@
 
             var divisionArray2 = systemArray1 / systemArray2;
             Assert.AreEqual(TypeCode.Int32, divisionArray2.ElementTypeCode);
-            Assert.IsTrue(divisionArray2.SequenceEqual(divisionArray.Select(a => ((IConvertible)a).ToInt32(null)).ToArray()));
+            Assert.IsTrue(divisionArray2.SequenceEqual(divisionArray.Select(a => ((IConvertible)a).ToInt32(null))));
+            
+            Assert.IsTrue((systemArray2 / 2.0f).SequenceEqual(systemArray2.Select(a => a / 2)));
         }
 
         [TestMethod()]
@@ -91,6 +99,8 @@
             var modulusArray2 = systemArray1 % systemArray2;
             Assert.AreEqual(TypeCode.Int32, modulusArray2.ElementTypeCode);
             Assert.IsTrue(modulusArray2.SequenceEqual(modulusArray.Select(a => ((IConvertible)a).ToInt32(null)).ToArray()));
+
+            Assert.IsTrue((systemArray1 % 2).SequenceEqual(systemArray1.Select(a => a % 2).ToArray()));
         }
 
         [TestMethod()]
@@ -105,6 +115,9 @@
             var powerArray = systemArray1.Pow<long>(systemArray2);
             Assert.AreEqual(TypeCode.Int64, powerArray.ElementTypeCode);
             Assert.IsTrue(powerArray.SequenceEqual(expectedValues1));
+
+            // TODO: Add Pow test with ValueType
+
         }
 
         [TestMethod()]

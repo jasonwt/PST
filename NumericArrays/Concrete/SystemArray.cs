@@ -52,6 +52,8 @@
         #region Public Properties
         public override TType this[int linearIndex] {
             get {
+//                Console.WriteLine($"Length: {Length}");
+//                Console.WriteLine($"linearIndex: {linearIndex}");
                 Debug.Assert(linearIndex >= 0 && linearIndex < Length, "Linear index is out of bounds.");
                 return elements[linearIndex];
             }

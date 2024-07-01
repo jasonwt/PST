@@ -161,5 +161,97 @@
         #endregion
 
         #endregion
+
+        #region Helper Methods
+        public static bool ValidateShape(int[] shape) {
+            if (shape == null)
+            {
+                return false;
+            }
+
+            if (shape.Length == 0)
+            {
+                return false;
+            }
+
+            if (shape.Any((dim) => dim <= 0))
+            {
+                return false;
+            }
+
+            return true;
+        }
+        public static int[] ComputeStrides(int[] shape) {
+            if (shape == null)
+            {
+                throw new ArgumentNullException(nameof(shape));
+            }
+
+            if (shape.Length == 0)
+            {
+                throw new ArgumentException("Shape can not be empty.", nameof(shape));
+            }
+
+            int[] strides = new int[shape.Length];
+
+            strides[shape.Length - 1] = 1;
+
+            for (int i = shape.Length - 2; i >= 0; i--)
+            {
+                if (shape[i + 1] <= 0)
+                {
+                    throw new ArgumentException("Shape dimensions must be greater than zero.");
+                }
+
+                strides[i] = strides[i + 1] * shape[i + 1];
+            }
+
+            return strides;
+        }
+
+        public static int[] ComputeBroadcastingShape(int[] shape1, int[] shape2) {
+            if (shape1 == null)
+            {
+                throw new ArgumentNullException(nameof(shape1));
+            }
+
+            if (shape2 == null)
+            {
+                throw new ArgumentNullException(nameof(shape2));
+            }
+
+            if (shape1.Length == 0)
+            {
+                throw new ArgumentException("Shape can not be empty.", nameof(shape1));
+            }
+
+            if (shape2.Length == 0)
+            {
+                throw new ArgumentException("Shape can not be empty.", nameof(shape2));
+            }
+
+            var shape1List = shape1.ToList();
+            var shape2List = shape2.ToList();
+
+            // Pad the shapes to have the same length
+            int maxLength = Math.Max(shape1List.Count, shape2List.Count);
+            shape1List.InsertRange(0, Enumerable.Repeat(1, maxLength - shape1List.Count));
+            shape2List.InsertRange(0, Enumerable.Repeat(1, maxLength - shape2List.Count));
+
+            int[] broadcastingShape = new int[maxLength];
+            // Check if the shapes are compatible
+            for (int i = 0; i < shape1List.Count; i++)
+            {
+                if (shape1List[i] != shape2List[i] && shape1List[i] != 1 && shape2List[i] != 1)
+                {
+                    throw new ArgumentException("Shapes are not compatible for broadcasting.");
+                }
+
+                broadcastingShape[i] = shape1List[i] > shape2List[i] ? shape1List[i] : shape2List[i];
+            }
+
+            return broadcastingShape;
+        }
+        #endregion
     }
 }

@@ -1,14 +1,13 @@
 ﻿namespace NumericArraysTests {
     using NumericArrays;
-    using NumericArrays.Concrete;
 
     public abstract class ArrayMathematicTests : ArrayTests {
         [TestMethod()]
         public void TestAddition() {
-            var systemArray1 = new SystemArray<int>(CreateArrayShape);
+            var systemArray1 = CreateArray<int>(CreateArrayShape);
             systemArray1.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
-            var systemArray2 = new SystemArray<float>(CreateArrayShape);
+            var systemArray2 = CreateArray<float>(CreateArrayShape);
             systemArray2.Fill(Enumerable.Range(1, 2 * 3 * 4).Reverse().ToArray());
 
             var expectedValues1 = Enumerable.Range(1, 2 * 3 * 4).Zip(Enumerable.Range(1, 2 * 3 * 4).Select(a => Convert.ToSingle(a)).Reverse(), (a, b) => Convert.ToInt64(a + b)).ToArray();
@@ -24,10 +23,10 @@
 
         [TestMethod()]
         public virtual void TestSubtraction() {
-            var systemArray1 = new SystemArray<int>(CreateArrayShape);
+            var systemArray1 = CreateArray<int>(CreateArrayShape);
             systemArray1.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
-            var systemArray2 = new SystemArray<float>(CreateArrayShape);
+            var systemArray2 = CreateArray<float>(CreateArrayShape);
             systemArray2.Fill(Enumerable.Range(1, 2 * 3 * 4).Reverse().ToArray());
 
             var expectedValues1 = Enumerable.Range(1, 2 * 3 * 4).Zip(Enumerable.Range(1, 2 * 3 * 4).Select(a => Convert.ToSingle(a)).Reverse(), (a, b) => Convert.ToInt64(a - b)).ToArray();
@@ -42,10 +41,10 @@
 
         [TestMethod()]
         public virtual void TestMultiplication() {
-            var systemArray1 = new SystemArray<int>(CreateArrayShape);
+            var systemArray1 = CreateArray<int>(CreateArrayShape);
             systemArray1.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
-            var systemArray2 = new SystemArray<float>(CreateArrayShape);
+            var systemArray2 = CreateArray<float>(CreateArrayShape);
             systemArray2.Fill(Enumerable.Range(1, 2 * 3 * 4).Reverse().ToArray());
 
             var expectedValues1 = Enumerable.Range(1, 2 * 3 * 4).Zip(Enumerable.Range(1, 2 * 3 * 4).Select(a => Convert.ToSingle(a)).Reverse(), (a, b) => Convert.ToInt64(a * b)).ToArray();
@@ -60,10 +59,10 @@
 
         [TestMethod()]
         public virtual void TestDivision() {
-            var systemArray1 = new SystemArray<int>(CreateArrayShape);
+            var systemArray1 = CreateArray<int>(CreateArrayShape);
             systemArray1.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
-            var systemArray2 = new SystemArray<float>(CreateArrayShape);
+            var systemArray2 = CreateArray<float>(CreateArrayShape);
             systemArray2.Fill(Enumerable.Range(1, 2 * 3 * 4).Reverse().ToArray());
 
             var expectedValues1 = Enumerable.Range(1, 2 * 3 * 4).Zip(Enumerable.Range(1, 2 * 3 * 4).Select(a => Convert.ToSingle(a)).Reverse(), (a, b) => Convert.ToInt64(a / b)).ToArray();
@@ -78,10 +77,10 @@
 
         [TestMethod()]
         public virtual void TestModulus() {
-            var systemArray1 = new SystemArray<int>(CreateArrayShape);
+            var systemArray1 = CreateArray<int>(CreateArrayShape);
             systemArray1.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
-            var systemArray2 = new SystemArray<float>(CreateArrayShape);
+            var systemArray2 = CreateArray<float>(CreateArrayShape);
             systemArray2.Fill(Enumerable.Range(1, 2 * 3 * 4).Reverse().ToArray());
 
             var expectedValues1 = Enumerable.Range(1, 2 * 3 * 4).Zip(Enumerable.Range(1, 2 * 3 * 4).Select(a => Convert.ToSingle(a)).Reverse(), (a, b) => Convert.ToInt64(a % b)).ToArray();
@@ -96,10 +95,10 @@
 
         [TestMethod()]
         public virtual void TestPower() {
-            var systemArray1 = new SystemArray<int>(CreateArrayShape);
+            var systemArray1 = CreateArray<int>(CreateArrayShape);
             systemArray1.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
-            var systemArray2 = new SystemArray<float>(CreateArrayShape);
+            var systemArray2 = CreateArray<float>(CreateArrayShape);
             systemArray2.Fill(Enumerable.Range(1, 2 * 3 * 4).Reverse().ToArray());
 
             var expectedValues1 = Enumerable.Range(1, 2 * 3 * 4).Zip(Enumerable.Range(1, 2 * 3 * 4).Select(a => Convert.ToSingle(a)).Reverse(), (a, b) => Convert.ToInt64(Math.Pow(a, b))).ToArray();
@@ -110,7 +109,7 @@
 
         [TestMethod()]
         public virtual void TestNegation() {
-            var systemByteArray = new SystemArray<byte>(CreateArrayShape);
+            var systemByteArray = CreateArray<byte>(CreateArrayShape);
             systemByteArray.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
             var expectedValues = Enumerable.Range(1, 2 * 3 * 4).Select(a => Convert.ToInt16(-a)).ToArray();
@@ -141,15 +140,13 @@
 
         [TestMethod()]
         public virtual void TestAbs() {
-            var systemByteArray = new SystemArray<byte>(CreateArrayShape);
+            var systemByteArray = CreateArray<byte>(CreateArrayShape);
             systemByteArray.Fill(Enumerable.Range(1, 2 * 3 * 4).ToArray());
 
             var expectedValues = Enumerable.Range(1, 2 * 3 * 4).Select(a => Convert.ToByte(Math.Abs(a))).ToArray();
             var shortAbsArray = systemByteArray.Abs();
             Assert.AreEqual(TypeCode.Byte, shortAbsArray.ElementTypeCode);
             Assert.IsTrue(shortAbsArray.SequenceEqual(expectedValues));
-
-
         }
     }
 }

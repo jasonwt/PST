@@ -2,18 +2,12 @@
     using System;
     using System.Diagnostics;
 
-    public class SubtractionArray<TType> : VirtualSourceArray<TType>
+    public class SubtractionArray<TType> : MathematicsArray<TType>
         where TType : struct, IConvertible {
-
-        #region Private Fields
-        private INumericArray rightArray;
-        #endregion
 
         #region Public Constructors
         public SubtractionArray(INumericArray leftArray, INumericArray rightArray) :
-            base(leftArray ?? throw new ArgumentNullException(nameof(leftArray)), leftArray.Shape) {
-
-            this.rightArray = rightArray ?? throw new ArgumentNullException(nameof(rightArray));
+            base(leftArray, rightArray) { 
         }
         public SubtractionArray(INumericArray<TType> leftArray, INumericArray rightArray) :
             this(leftArray as INumericArray, rightArray) {
@@ -25,8 +19,8 @@
             get {
                 Debug.Assert(linearIndex >= 0 && linearIndex <= Length);
 
-                double leftValue = ((IConvertible)sourceArray[linearIndex]).ToDouble(null);
-                double rightValue = ((IConvertible)rightArray[linearIndex]).ToDouble(null);
+                double leftValue = ((IConvertible)sourceArray[!isLeftArrayBroadcasting ? linearIndex : ComputeLeftArrayLinearIndex(linearIndex)]).ToDouble(null);
+                double rightValue = ((IConvertible)rightArray[!isRightArrayBroadcasting ? linearIndex : ComputeRightArrayLinearIndex(linearIndex)]).ToDouble(null);
 
                 return ElementTypeCode switch {
                     TypeCode.Boolean => (TType)(ValueType)((leftValue - rightValue) != 0),

@@ -7,6 +7,8 @@
 
         #region Protected Fields
         protected readonly INumericArray sourceArray;
+        protected readonly int[] sourceArrayShape;
+        protected readonly int[] sourceArrayStrides;
         #endregion
 
         #region Protected Constructors
@@ -14,6 +16,8 @@
             base(arrayShape ?? sourceArray?.Shape ?? throw new ArgumentNullException(nameof(sourceArray))) {
 
             this.sourceArray = sourceArray ?? throw new ArgumentNullException(nameof(sourceArray));
+            sourceArrayStrides = sourceArray.Strides;
+            sourceArrayShape = sourceArray.Shape;
         }
         #endregion
 
@@ -68,6 +72,16 @@
                 }
 
                 sourceArray[linearIndex] = (TType) sourceArray[linearIndex];
+            }
+        }
+
+        public override int MemoryUsage {
+            get {
+                int memoryUsage = base.MemoryUsage +
+                    (sizeof(int) * sourceArrayStrides.Length) +
+                    (sizeof(int) * sourceArrayShape.Length);
+
+                return memoryUsage;
             }
         }
         #endregion

@@ -13,49 +13,6 @@
         }
 
         [TestMethod()]
-        public virtual void BroadcastToTests() {
-            //Rule 1: 
-            //    If the two arrays differ in their number of dimensions, the shape of the one with fewer dimensions 
-            //    is padded with ones on its leading(left) side.
-            //Rule 2: 
-            //    If the shape of the two arrays does not match in any dimension, the array with shape equal to 1 in 
-            //    that dimension is stretched to match the other shape.
-            //Rule 3: 
-            //    If in any dimension the sizes disagree and neither is equal to 1, an error is raised.
-
-            var arrayToTest = CreateArray<int>(CreateArrayShape, Enumerable.Range(1, 2 * 3 * 4).Cast<ValueType>().ToArray());
-            Assert.AreEqual(typeof(int), arrayToTest.ElementType);
-
-            // Rule 1 Passed
-            // arrayToTest should pad with ones on its leading(left) side
-            // in this cast it will padd with two ones on the left side
-            // Rule 2 Passed
-            // arrayToTest the ones that were added to the left will be
-            // stretched to match the other shape at the corresponding dimension
-            // Rule 3 Passed
-            // arrayToTest and broadcastedArray have the same shape because of Rule 1 and Rule 2
-            var broadcastedArray = arrayToTest.BroadcastTo([2, 2, 2, 3, 4]);
-            var expectedValues1 = arrayToTest.Concat(arrayToTest).Concat(arrayToTest).Concat(arrayToTest).ToArray();
-            Assert.IsTrue(broadcastedArray.Shape.SequenceEqual([2, 2, 2, 3, 4]));
-            Assert.IsTrue(broadcastedArray.SequenceEqual(expectedValues1));
-
-            // Rule 1 Passed
-            // The two shapes are the same rank so nothing should be done
-            // Rule 2 Passed
-            // All dimensions are the same other then the middle value of the broadcastToShape
-            // which is a 1 so it can be exapanded to match that of the arrayToTest dimension at the same index
-            // Rule 3 Passed
-            // arrayToTest and broadcastedArray have the same shape because of Rule 1 and Rule 2
-            broadcastedArray = arrayToTest.BroadcastTo([2, 1, 4]);
-            Assert.IsTrue(broadcastedArray.Shape.SequenceEqual([2, 1, 4]));
-            Assert.IsTrue(broadcastedArray.SequenceEqual([1, 2, 3, 4, 13, 14, 15, 16 ]));
-
-            broadcastedArray = arrayToTest.BroadcastTo([1]);
-            Assert.IsTrue(broadcastedArray.Shape.SequenceEqual([1]));
-            Assert.IsTrue(broadcastedArray.SequenceEqual([1]));
-        }
-
-        [TestMethod()]
         public virtual void TransposeTests() {
             var arrayToTest = CreateArray<int>(CreateArrayShape, Enumerable.Range(1, 2 * 3 * 4).Cast<ValueType>().ToArray());
             Assert.AreEqual(typeof(int), arrayToTest.ElementType);

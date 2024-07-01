@@ -253,6 +253,22 @@
 
         [TestMethod()]
         public virtual void TestArgMin() {
+            //sbyte sbyteValue = -1;
+            //byte byteValue = 1;
+            //short shortValue = -2;
+            //ushort ushortValue = 2;
+            //int intValue = -3;
+            //uint uintValue = 3;
+            //long longValue = -4;
+            //ulong ulongValue = 4;
+            //float floatValue = 5;
+            //double doubleValue = 6;
+            //decimal decimalValue = 7;
+            
+
+            //var result = sbyteValue * ulongValue;
+
+
             var arrayToTest = CreateArray<int>(CreateArrayShape, Enumerable.Range(1, 2 * 3 * 4).Cast<ValueType>().ToArray());
 
             var intArgMin = arrayToTest.ArgMin();

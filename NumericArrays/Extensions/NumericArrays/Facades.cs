@@ -15,36 +15,6 @@
             where TType : struct, IConvertible => sourceArray;
         #endregion
 
-        #region BroadcastTo Methods
-        public static INumericArray BroadcastTo(this INumericArray sourceArray, int[] broadcastToShape, bool? toConcrete = null) {
-            if (sourceArray == null)
-            {
-               throw new ArgumentNullException(nameof(sourceArray));
-            }
-
-            return sourceArray.ElementTypeCode switch {
-                TypeCode.Boolean => BroadcastTo<bool>(sourceArray, broadcastToShape, toConcrete),
-                TypeCode.SByte => BroadcastTo<sbyte>(sourceArray, broadcastToShape, toConcrete),
-                TypeCode.Byte => BroadcastTo<byte>(sourceArray, broadcastToShape, toConcrete),
-                TypeCode.Int16 => BroadcastTo<short>(sourceArray, broadcastToShape, toConcrete),
-                TypeCode.UInt16 => BroadcastTo<ushort>(sourceArray, broadcastToShape, toConcrete),
-                TypeCode.Int32 => BroadcastTo<int>(sourceArray, broadcastToShape, toConcrete),
-                TypeCode.UInt32 => BroadcastTo<uint>(sourceArray, broadcastToShape, toConcrete),
-                TypeCode.Int64 => BroadcastTo<long>(sourceArray, broadcastToShape, toConcrete),
-                TypeCode.UInt64 => BroadcastTo<ulong>(sourceArray, broadcastToShape, toConcrete),
-                TypeCode.Single => BroadcastTo<float>(sourceArray, broadcastToShape, toConcrete),
-                TypeCode.Double => BroadcastTo<double>(sourceArray, broadcastToShape, toConcrete),
-                TypeCode.Decimal => BroadcastTo<decimal>(sourceArray, broadcastToShape, toConcrete),
-                _ => throw new NotImplementedException()
-            };
-        }
-        public static INumericArray<TType> BroadcastTo<TType>(this INumericArray<TType> sourceArray, int[] broadcastToShape, bool? toConcrete = null)
-            where TType : struct, IConvertible => ConstructVirtualArray(new BroadcastingArray<TType>(sourceArray, broadcastToShape), toConcrete);
-
-        public static INumericArray<TType> BroadcastTo<TType>(this INumericArray sourceArray, int[] broadcastToShape, bool? toConcrete = null)
-            where TType : struct, IConvertible => ConstructVirtualArray(new BroadcastingArray<TType>(sourceArray, broadcastToShape), toConcrete);
-        #endregion
-
         #region Slice Methods
         public static INumericArray<TType> Slice<TType>(this INumericArray sourceArray, string slicingMask, bool? toConcrete = null)
             where TType : struct, IConvertible {

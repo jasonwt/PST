@@ -2,21 +2,12 @@
     using System;
     using System.Diagnostics;
 
-    public class ModulusArray<TType> : VirtualSourceArray<TType>
+    public class ModulusArray<TType> : MathematicsArray<TType>
         where TType : struct, IConvertible {
-
-        #region Private Fields
-        private INumericArray rightArray;
-        #endregion
 
         #region Public Constructors
         public ModulusArray(INumericArray leftArray, INumericArray rightArray) :
-            base(leftArray ?? throw new ArgumentNullException(nameof(leftArray)), leftArray.Shape) {
-
-            this.rightArray = rightArray ?? throw new ArgumentNullException(nameof(rightArray));
-        }
-        public ModulusArray(INumericArray<TType> leftArray, INumericArray rightArray) :
-            this(leftArray as INumericArray, rightArray) {
+            base(leftArray, rightArray) {
         }
         #endregion
 
@@ -25,8 +16,8 @@
             get {
                 Debug.Assert(linearIndex >= 0 && linearIndex <= Length);
 
-                double leftValue = ((IConvertible)sourceArray[linearIndex]).ToDouble(null);
-                double rightValue = ((IConvertible)rightArray[linearIndex]).ToDouble(null);
+                double leftValue = ((IConvertible)sourceArray[!isLeftArrayBroadcasting ? linearIndex : ComputeLeftArrayLinearIndex(linearIndex)]).ToDouble(null);
+                double rightValue = ((IConvertible)rightArray[!isRightArrayBroadcasting ? linearIndex : ComputeRightArrayLinearIndex(linearIndex)]).ToDouble(null);
 
                 return ElementTypeCode switch {
                     TypeCode.Boolean => (TType)(ValueType)((leftValue % rightValue) != 0),

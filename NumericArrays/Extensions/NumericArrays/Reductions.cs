@@ -6,7 +6,7 @@
     public static partial class NA {
         #region Reduction Methods
 
-        #region Sum Methods
+        #region Sum Methods (Sum)
         public static INumericArray Sum(this INumericArray thisArray, int? axis = null, bool? toConcrete = null) {
             if (thisArray == null)
             {
@@ -41,7 +41,7 @@
         }
         #endregion
 
-        #region Product (Prod) Methods
+        #region Product Methods (Prod)
         public static INumericArray Prod(this INumericArray thisArray, int? axis = null, bool? toConcrete = null) {
             if (thisArray == null)
             {
@@ -70,7 +70,7 @@
             where TResult : struct, IConvertible => ConstructVirtualArray(new ProductArray<TResult>(thisArray, axis), toConcrete);
         #endregion 
 
-        #region Mean Methods
+        #region Mean Methods (Mean)
         public static INumericArray Mean(this INumericArray thisArray, int? axis = null, bool? toConcrete = null) {
             if (thisArray == null)
             {
@@ -99,7 +99,7 @@
             where TResult : struct, IConvertible => ConstructVirtualArray(new MeanArray<TResult>(thisArray, axis), toConcrete);
         #endregion
 
-        #region Min Methods
+        #region Min Methods (Min)
         public static INumericArray Min(this INumericArray thisArray, int? axis = null, bool? toConcrete = null) {
             if (thisArray == null)
             {
@@ -128,7 +128,7 @@
             where TResult : struct, IConvertible => ConstructVirtualArray(new MinArray<TResult>(thisArray, axis), toConcrete);
         #endregion
 
-        #region Max Methods
+        #region Max Methods (Max)
         public static INumericArray Max(this INumericArray thisArray, int? axis = null, bool? toConcrete = null) {
             if (thisArray == null)
             {
@@ -157,7 +157,7 @@
             where TResult : struct, IConvertible => ConstructVirtualArray(new MaxArray<TResult>(thisArray, axis), toConcrete);
         #endregion
 
-        #region Median Methods
+        #region Median Methods (Median)
         public static INumericArray Median(this INumericArray thisArray, int? axis = null, bool? toConcrete = null) {
             if (thisArray == null)
             {
@@ -186,7 +186,7 @@
             where TResult : struct, IConvertible => ConstructVirtualArray(new MedianArray<TResult>(thisArray, axis), toConcrete);
         #endregion
 
-        #region Variance (Var) Methods
+        #region Variance Methods (Var)
         public static INumericArray Var(this INumericArray thisArray, int? axis = null, bool? toConcrete = null) {
             if (thisArray == null)
             {
@@ -215,7 +215,7 @@
             where TResult : struct, IConvertible => ConstructVirtualArray(new VarianceArray<TResult>(thisArray, axis), toConcrete);
         #endregion
 
-        #region Standard Deviation (Std) Methods
+        #region Standard Deviation Methods (Std)
         public static INumericArray Std(this INumericArray thisArray, int? axis = null, bool? toConcrete = null) {
             if (thisArray == null)
             {
@@ -244,7 +244,7 @@
             where TResult : struct, IConvertible => ConstructVirtualArray(new StandardDeviationArray<TResult>(thisArray, axis), toConcrete);
         #endregion
 
-        #region ArgMax Methods
+        #region ArgMax Methods (ArgMax)
         public static INumericArray ArgMax(this INumericArray thisArray, int? axis = null, bool? toConcrete = null) {
             if (thisArray == null)
             {
@@ -273,7 +273,7 @@
             where TResult : struct, IConvertible => ConstructVirtualArray(new ArgMaxArray<TResult>(thisArray, axis), toConcrete);
         #endregion
 
-        #region ArgMin Methods
+        #region ArgMin Methods (ArgMin)
         public static INumericArray ArgMin(this INumericArray thisArray, int? axis = null, bool? toConcrete = null) {
             if (thisArray == null)
             {

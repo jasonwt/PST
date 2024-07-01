@@ -3,12 +3,12 @@
     using System;
 
     public interface IVirtualArray : INumericArray {
-        IConcreteArray ToConcrete();
+        IConcreteArray ToConcrete(IConcreteArrayConstructor? concreteArrayConstructor = null);
     }
 
     public interface IVirtualArray<TType> : INumericArray<TType>, IVirtualArray
         where TType : struct, IConvertible {
 
-        new IConcreteArray<TType> ToConcrete();
+        new IConcreteArray<TType> ToConcrete(IConcreteArrayConstructor? concreteArrayConstructor = null);
     }
 }

@@ -4,7 +4,7 @@
     using NumericArrays.Virtual.Mathematics;
 
     public static partial class NA {
-        #region Addition Methods
+        #region Addition Methods (Add)
         public static INumericArray Add(this INumericArray leftArray, INumericArray rightArray, bool? toConcrete = null) {
             if (leftArray == null)
             {
@@ -38,7 +38,7 @@
             where TResult : struct, IConvertible => ConstructVirtualArray(new AdditionArray<TResult>(leftArray, rightArray), toConcrete);
         #endregion
 
-        #region Subtraction Methods
+        #region Subtraction Methods (Subtract)
         public static INumericArray Subtract(this INumericArray leftArray, INumericArray rightArray, bool? toConcrete = null) {
             if (leftArray == null)
             {
@@ -72,7 +72,7 @@
             where TResult : struct, IConvertible => ConstructVirtualArray(new SubtractionArray<TResult>(leftArray, rightArray), toConcrete);
         #endregion
 
-        #region Multiplication Methods
+        #region Multiplication Methods (Multiply)
         public static INumericArray Multiply(this INumericArray leftArray, INumericArray rightArray, bool? toConcrete = null) {
             if (leftArray == null)
             {
@@ -106,7 +106,7 @@
             where TResult : struct, IConvertible => ConstructVirtualArray(new MultiplicationArray<TResult>(leftArray, rightArray), toConcrete);
         #endregion
 
-        #region Division Methods
+        #region Division Methods (Divide)
         public static INumericArray Divide(this INumericArray leftArray, INumericArray rightArray, bool? toConcrete = null) {
             if (leftArray == null)
             {
@@ -140,7 +140,7 @@
             where TResult : struct, IConvertible => ConstructVirtualArray(new DivisionArray<TResult>(leftArray, rightArray), toConcrete);
         #endregion
 
-        #region Modulus Methods
+        #region Modulus Methods (Mod)
         public static INumericArray Mod(this INumericArray leftArray, INumericArray rightArray, bool? toConcrete = null) {
             if (leftArray == null)
             {
@@ -174,7 +174,7 @@
             where TResult : struct, IConvertible => ConstructVirtualArray(new ModulusArray<TResult>(leftArray, rightArray), toConcrete);
         #endregion
 
-        #region Power Methods
+        #region Power Methods (Pow)
         public static INumericArray Pow(this INumericArray leftArray, INumericArray rightArray, bool? toConcrete = null) {
             if (leftArray == null)
             {
@@ -208,7 +208,7 @@
             where TResult : struct, IConvertible => ConstructVirtualArray(new PowerArray<TResult>(leftArray, rightArray), toConcrete);
         #endregion
 
-        #region Absolute Value (Abs) Methods
+        #region Absolute Value Methods (Abs)
         public static INumericArray Abs(this INumericArray sourceArray, bool? toConcrete = null) {
             if (sourceArray == null)
             {
@@ -237,7 +237,7 @@
             where TResult : struct, IConvertible => ConstructVirtualArray(new AbsoluteValueArray<TResult>(sourceArray), toConcrete);
         #endregion
 
-        #region Negation Methods
+        #region Negation Methods (Negate)
         public static INumericArray Negate(this INumericArray sourceArray, bool? toConcrete = null) {
             if (sourceArray == null)
             {

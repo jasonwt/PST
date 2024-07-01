@@ -19,9 +19,11 @@
         #endregion
 
         #region Public Methods
-        public IConcreteArray<TType> ToConcrete() => throw new NotImplementedException();
-        IConcreteArray IVirtualArray.ToConcrete() => ToConcrete();
-        #endregion
+        public IConcreteArray<TType> ToConcrete(IConcreteArrayConstructor? concreteArrayConstructor = null) => 
+            NA.ConstructConcreteArray<TType>(Shape, concreteArrayConstructor);
 
+        IConcreteArray IVirtualArray.ToConcrete(IConcreteArrayConstructor? concreteArrayConstructor) =>
+            ToConcrete(concreteArrayConstructor);
+        #endregion
     }
 }

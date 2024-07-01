@@ -130,6 +130,8 @@
 
             inclusiveStartingDimensionalIndex ??= new int[thisArray.Rank];
             exclusiveEndingDimensionalIndex ??= thisArray.Shape;
+
+            throw new NotImplementedException();
         }
         public static async Task ForEachElementAsync(this INumericArray thisArray, Action<int[], INumericArray> action, int[]? inclusiveStartingDimensionalIndex = null, int[]? exclusiveEndingDimensionalIndex = null, int requestedThreads = 1) =>
             await Task.Run(() => thisArray.ForEachElement(action, inclusiveStartingDimensionalIndex, exclusiveEndingDimensionalIndex, requestedThreads));

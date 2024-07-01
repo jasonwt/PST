@@ -2,6 +2,39 @@
     using System;
     using System.Diagnostics;
 
+    public class SystemArrayConstructor : ConcreteArrayConstructor {
+        public override IConcreteArray ConstructConcreteArray(Type elementType, int[] shape, Func<int, ValueType>? setValueFunc = null) {
+            IConcreteArray newConcreteArray = Type.GetTypeCode(elementType) switch {
+                TypeCode.Boolean => ConstructConcreteArray<bool>(shape, setValueFunc),
+                TypeCode.SByte => ConstructConcreteArray<sbyte>(shape, setValueFunc),
+                TypeCode.Byte => ConstructConcreteArray<byte>(shape, setValueFunc),
+                TypeCode.Int16 => ConstructConcreteArray<short>(shape, setValueFunc),
+                TypeCode.UInt16 => ConstructConcreteArray<ushort>(shape, setValueFunc),
+                TypeCode.Int32 => ConstructConcreteArray<int>(shape, setValueFunc),
+                TypeCode.UInt32 => ConstructConcreteArray<uint>(shape, setValueFunc),
+                TypeCode.Int64 => ConstructConcreteArray<long>(shape, setValueFunc),
+                TypeCode.UInt64 => ConstructConcreteArray<ulong>(shape, setValueFunc),
+                TypeCode.Single => ConstructConcreteArray<float>(shape, setValueFunc),
+                TypeCode.Double => ConstructConcreteArray<double>(shape, setValueFunc),
+                TypeCode.Decimal => ConstructConcreteArray<decimal>(shape, setValueFunc),
+                _ => throw new NotImplementedException()
+            };
+
+            return newConcreteArray;
+        }
+
+        public override IConcreteArray<TType> ConstructConcreteArray<TType>(int[] shape, Func<int, ValueType>? setValueFunc = null) {
+            var newConcreteArray = new SystemArray<TType>(shape);
+
+            if (setValueFunc != null)
+            {
+                newConcreteArray.Fill(setValueFunc);
+            }
+
+            return newConcreteArray;
+        }
+    }
+
     public class SystemArray<TType> : NumericArray<TType>, IConcreteArray<TType>
         where TType: struct, IConvertible {
 

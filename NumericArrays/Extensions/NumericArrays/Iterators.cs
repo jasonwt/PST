@@ -1,6 +1,8 @@
 ﻿namespace NumericArrays {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
 
     public static partial class NA {
         public static IEnumerable<int[]> LinearIndexIterator(this INumericArray array, int? axis = null) {
@@ -9,66 +11,61 @@
                 throw new ArgumentNullException(nameof(array));
             }
 
-            int step = axis == null ? array.Length : array.Shape[axis.Value];
-            int length = array.Length;
+            int[] sourceArrayStrides = array.Strides;
+            int[] sourceArrayShape = array.Shape;
 
-            int[] indices = new int[step];
+            int numLinearIndicies = axis == null ? 1 : array.Length / sourceArrayShape[axis.Value];
+            int iterations = array.Length / numLinearIndicies;
+            int step = axis == null ? 1 : sourceArrayStrides[axis.Value];
 
-            for (int i = 0; i < length; i += step)
+            for (int linearIndex = 0; linearIndex < numLinearIndicies; linearIndex ++)
             {
-                for (int j = 0; j < step; j++)
+                int start = 0;
+                if (axis != null)
                 {
-                    indices[j] = i + j;
+                    int sAxisStride = sourceArrayStrides[axis.Value];
+                    int sPrevAxisStride = axis.Value == 0 ? 1 : sourceArrayStrides[axis.Value - 1];
+
+                    start = (linearIndex / sAxisStride * sPrevAxisStride) + (linearIndex % sAxisStride);
                 }
 
-                yield return indices;
+                int end = start + (iterations * step);
+
+                int[] sourceArrayIndicies = new int[iterations];
+
+                for (int i = start, j = 0; i < end; i += step, j ++)
+                {
+                    sourceArrayIndicies[j] = i;
+                }
+
+                yield return sourceArrayIndicies;
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<ValueType[]> LinearValueIterator(this INumericArray array, int? axis = null) {
-            if (array == null)
-            {
-                throw new ArgumentNullException(nameof(array));
-            }
-
-            int step = axis == null ? array.Length : array.Shape[axis.Value];
-            int length = array.Length / step;
-
-            ValueType[] values = new ValueType[step];
-
-            for (int i = 0; i < length; i += step)
-            {
-                for (int j = 0; j < step; j++)
+            return LinearIndexIterator(array, axis).Select(indices => {
+                var values = new ValueType[indices.Length];
+                for (int i = 0; i < indices.Length; i++)
                 {
-                    values[j] = array[i + j];
+                    values[i] = array[indices[i]];
                 }
-
-                yield return values;
-            }
+                return values;
+            });
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<TType[]> LinearValueIterator<TType>(this INumericArray<TType> array, int? axis = null)
             where TType: struct, IConvertible {
 
-            if (array == null)
-            {
-                throw new ArgumentNullException(nameof(array));
-            }
-
-            int step = axis == null ? array.Length : array.Shape[axis.Value];
-            int length = array.Length / step;
-
-            TType[] values = new TType[step];
-
-            for (int i = 0; i < length; i += step)
-            {
-                for (int j = 0; j < step; j++)
+            return LinearIndexIterator(array, axis).Select(indices => {
+                var values = new TType[indices.Length];
+                for (int i = 0; i < indices.Length; i++)
                 {
-                    values[j] = array[i + j];
+                    values[i] = array[indices[i]];
                 }
-
-                yield return values;
-            }
+                return values;
+            });
         }
     }
 }

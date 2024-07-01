@@ -6,34 +6,36 @@
     using NumericArrays.Virtual;
     
     public static partial class NA {
-        #region ConstructVirtualArray Methods
-        private static INumericArray ConstructVirtualArray(IVirtualArray virtualArray, bool? toConcrete) {
-            toConcrete ??= false;
-
-            return toConcrete.Value ? virtualArray.ToConcrete() : virtualArray;
-        }
-
-        private static INumericArray<TType> ConstructVirtualArray<TType>(IVirtualArray<TType> virtualArray, bool? toConcrete)
-            where TType : struct, IConvertible {
-
-            toConcrete ??= false;
-
-            return toConcrete.Value ? virtualArray.ToConcrete() : virtualArray;
-        }
+        #region Construct Array Public Static Public Properties
+        public static Func<IVirtualArray, bool>? ShouldConstructAsConcreteArrayFunc { get; set; } = null;
         #endregion
 
-        #region Concrete Array Factory Methods
-        private static IConcreteArray<TType> Construct<TType>(int[] shape)
+        #region Construct Array Public Static Factory Methods
+
+        #region Construct Methods
+        public static INumericArray<TType> ConstructVirtualArray<TType>(IVirtualArray<TType> virtualArray, bool? toConcrete)
             where TType : struct, IConvertible {
 
-            return new SystemArray<TType>(shape);
+            //TODO: Not working correctly
+            //return virtualArray.ToConcrete();
+
+            toConcrete ??= ShouldConstructAsConcreteArrayFunc?.Invoke(virtualArray) ?? false;
+
+            return toConcrete.Value ? virtualArray.ToConcrete() : virtualArray;
         }
+
+        public static IConcreteArray<TType> ConstructConcreteArray<TType>(int[] shape, IConcreteArrayConstructor? concreteArrayConstructor = null)
+            where TType : struct, IConvertible {
+
+            return concreteArrayConstructor?.ConstructConcreteArray<TType>(shape) ?? new SystemArray<TType>(shape);
+        }
+        #endregion
 
         #region Full Methods
         public static IConcreteArray<TType> Full<TType>(int[] shape, TType fillValue)
             where TType : struct, IConvertible {
 
-            IConcreteArray<TType> concreteArray = Construct<TType>(shape);
+            IConcreteArray<TType> concreteArray = ConstructConcreteArray<TType>(shape);
             concreteArray.Fill(fillValue);
             return concreteArray;
         }
@@ -43,7 +45,7 @@
         public static IConcreteArray<TType> Zeros<TType>(int[] shape)
             where TType : struct, IConvertible {
 
-            IConcreteArray<TType> concreteArray = Construct<TType>(shape);
+            IConcreteArray<TType> concreteArray = ConstructConcreteArray<TType>(shape);
             return concreteArray;
         }
         #endregion
@@ -52,7 +54,7 @@
         public static IConcreteArray<TType> Ones<TType>(int[] shape)
             where TType : struct, IConvertible {
 
-            IConcreteArray<TType> concreteArray = Construct<TType>(shape);
+            IConcreteArray<TType> concreteArray = ConstructConcreteArray<TType>(shape);
             concreteArray.Fill(1);
             return concreteArray;
         }
@@ -76,7 +78,7 @@
             double doubleRange = Math.Abs(doubleEnd - doubleStart);
             int numIterations = (int)(doubleRange / step);
 
-            IConcreteArray<TType> newArray = Construct<TType>(new int[] { numIterations+1 });
+            IConcreteArray<TType> newArray = ConstructConcreteArray<TType>(new int[] { numIterations+1 });
 
             if (doubleStart < doubleEnd)
             {
@@ -112,7 +114,7 @@
             double doubleRange = Math.Abs(doubleEnd - doubleStart);
             double step = doubleRange / (numPoints - 1);
 
-            IConcreteArray<TType> newArray = Construct<TType>(new int[] { numPoints });
+            IConcreteArray<TType> newArray = ConstructConcreteArray<TType>(new int[] { numPoints });
 
             if (doubleStart > doubleEnd)
             {
@@ -145,7 +147,7 @@
 
             int[] arraySize = Enumerable.Repeat(size, rank).ToArray();
 
-            IConcreteArray<TType> newArray = Construct<TType>(arraySize);
+            IConcreteArray<TType> newArray = ConstructConcreteArray<TType>(arraySize);
 
             for (int i = 0; i < size; i++)
             {

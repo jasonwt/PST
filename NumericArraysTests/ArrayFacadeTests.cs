@@ -182,8 +182,8 @@
             // Slicing with step
             Assert.IsTrue(arrayToTest["0:2"].SequenceEqual(Enumerable.Range(1, 24)));
             // TODO: BUG: not working with negative indices
-            //Assert.IsTrue(arrayToTest["-1"].SequenceEqual(Enumerable.Range(13, 12)));
-            //Assert.IsTrue(arrayToTest["-2"].SequenceEqual(Enumerable.Range(1, 12)));
+            Assert.IsTrue(arrayToTest["-1"].SequenceEqual(Enumerable.Range(13, 12)));
+            Assert.IsTrue(arrayToTest["-2"].SequenceEqual(Enumerable.Range(1, 12)));
 
             // Second Dimension
             Assert.IsTrue(arrayToTest[":,0"].SequenceEqual([1,2,3,4,13,14,15,16]));
@@ -192,8 +192,8 @@
             // Slicing with step
             Assert.IsTrue(arrayToTest[":,0:2,:"].SequenceEqual([1,2,3,4,5,6,7,8,13,14,15,16,17,18,19,20]));
             // TODO: BUG: not working with negative indices
-            //Assert.IsTrue(arrayToTest[":,-1"].SequenceEqual(new int[] { 9, 10, 11, 12, 21, 22, 23, 24 }));
-            //Assert.IsTrue(arrayToTest[":,-2"].SequenceEqual(new int[] { 5, 6, 7, 8, 17, 18, 19, 20 }));
+            Assert.IsTrue(arrayToTest[":,-1"].SequenceEqual(new int[] { 9, 10, 11, 12, 21, 22, 23, 24 }));
+            Assert.IsTrue(arrayToTest[":,-2"].SequenceEqual(new int[] { 5, 6, 7, 8, 17, 18, 19, 20 }));
 
             // Third Dimension
             Assert.IsTrue(arrayToTest[":,:,0"].SequenceEqual([1, 5, 9, 13, 17, 21]));
@@ -204,10 +204,10 @@
             Assert.IsTrue(arrayToTest[":,:,0:2"].SequenceEqual([1, 2, 5, 6, 9, 10, 13, 14, 17, 18, 21, 22]));
             Assert.IsTrue(arrayToTest[":,:,1:2"].SequenceEqual([2, 6, 10, 14, 18, 22]));
             // TODO: BUG: not working with negative indices
-            //Assert.IsTrue(arrayToTest[":,:,-1"].SequenceEqual(new int[] { 4, 8, 12, 16, 20, 24 }));
-            //Assert.IsTrue(arrayToTest[":,:,-2"].SequenceEqual(new int[] { 3, 7, 11, 15, 19, 23 }));
-            //Assert.IsTrue(arrayToTest[":,:,-3"].SequenceEqual(new int[] { 2, 6, 10, 14, 18, 22 }));
-            //Assert.IsTrue(arrayToTest[":,:,-4"].SequenceEqual(new int[] { 1, 5, 9, 13, 17, 21 }));
+            Assert.IsTrue(arrayToTest[":,:,-1"].SequenceEqual(new int[] { 4, 8, 12, 16, 20, 24 }));
+            Assert.IsTrue(arrayToTest[":,:,-2"].SequenceEqual(new int[] { 3, 7, 11, 15, 19, 23 }));
+            Assert.IsTrue(arrayToTest[":,:,-3"].SequenceEqual(new int[] { 2, 6, 10, 14, 18, 22 }));
+            Assert.IsTrue(arrayToTest[":,:,-4"].SequenceEqual(new int[] { 1, 5, 9, 13, 17, 21 }));
         }
 
         [TestMethod()]
